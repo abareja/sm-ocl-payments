@@ -11,14 +11,69 @@ msgstr ""
 "PO-Revision-Date: 2023-12-19T11:24:56+00:00\n"
 "Language: \n"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:19
-msgid "Polylang is active"
-msgstr "Wtyczka Polylang jest aktywna"
-
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:20
-msgid "This settings are applied for"
-msgstr "Powyższe ustawienia zostaną zastosowane dla języka"
-
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:24
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:26
 msgid "ACF Pro is required for this plugin. Enable it on plugins page!"
 msgstr "Wtyczka ACF Pro jest wymagana do prawidłowego działania. Włącz ją na stronie zarządzania wtyczkami!"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:19
+msgid "Global settings"
+msgstr "Ustawienia globalne"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:23
+msgid "Merchant ID"
+msgstr "ID Sprzedającego"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:30
+msgid "Security code"
+msgstr "Kod bezpieczeństwa"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:37
+msgid "CRC"
+msgstr "CRC"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:44
+msgid "Save orders"
+msgstr "Zapisz zamówienia"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:52
+msgid "Enable sandbox mode"
+msgstr "Włącz tryb sandbox"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:60
+msgid "Return URL"
+msgstr "URL powrotu"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:67
+msgid "Return Error URL"
+msgstr "URL powrotu dla błędów"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:77
+msgid "Save changes"
+msgstr "Zapisz zmiany"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:17
+msgid "Shortcode exmaples"
+msgstr "Przykładowe Shortcode"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:18
+msgid "Basic:"
+msgstr "Podstawowe:"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:21
+msgid "With description:"
+msgstr "Z opisem:"
+
+#: sm-ocl-payments/Modules/Views/form.view.php:16
+#: sm-ocl-payments/Modules/Views/modal.view.php:10
+msgid "* Imię i nazwisko"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:17
+#: sm-ocl-payments/Modules/Views/modal.view.php:11
+msgid "* Adres e-mail"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:25
+#: sm-ocl-payments/Modules/Views/modal.view.php:19
+msgid "Pay"
+msgstr "Zapłać"

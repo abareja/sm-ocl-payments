@@ -24,7 +24,7 @@ if (is_readable(__DIR__ . '/vendor/autoload.php')) {
 }
 
 //Core
-require_once PluginConfig::getPluginDir() . 'Core/SMPlugin.php';
+require_once PluginConfig::getPluginDir() . 'Core/SMOclPayments.php';
 $plugin = new SMPlugin();
 $plugin->run();
 

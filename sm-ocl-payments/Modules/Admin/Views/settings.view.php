@@ -3,7 +3,6 @@
 use SM\OclPayments\Modules\Admin\Forms\SettingsForm;
 use SM\Core\Admin\Forms\AdminNotifications;
 use SM\Core\Helpers\Helpers;
-use SM\Core\Helpers\PolylangHelpers;
 use SM\OclPayments\Config\PluginConfig;
 ?>
 
@@ -14,11 +13,14 @@ use SM\OclPayments\Config\PluginConfig;
 <?php if(Helpers::isACFActive()): ?>
   <?php SettingsForm::generate(); ?>
 
-  <?php if(PolylangHelpers::isPolylangActive()): ?>
-    <div class="sm-form-alert">
-      <h3><?php _e('Polylang is active', PluginConfig::getTextDomain()); ?></h3>
-      <p><?php printf('%1$s: <span style="text-transform: uppercase;">%2$s</span>', __('This settings are applied for', PluginConfig::getTextDomain()), PolylangHelpers::getCurrentLanguage()); ?>  </div>
-  <?php endif; ?>
+  <div class="sm-form-alert">
+    <h3><?php _e('Shortcode exmaples', PluginConfig::getTextDomain()); ?></h3>
+    <h4><?php _e('Basic:', PluginConfig::getTextDomain()); ?></h4>
+    <pre>[sm-ocl-payments amount="10.0"]</pre>
+    <hr />
+    <h4><?php _e('With description:', PluginConfig::getTextDomain()); ?></h4>
+    <pre>[sm-ocl-payments amount="10.0" description="Sample payment"]</pre>
+  </div>
 
 <?php else: 
   AdminNotifications::error(__('ACF Pro is required for this plugin. Enable it on plugins page!', PluginConfig::getTextDomain())); 

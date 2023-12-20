@@ -7,18 +7,73 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-20T11:30:39+00:00\n"
+"POT-Creation-Date: 2023-12-20T16:29:57+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:19
-msgid "Polylang is active"
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:19
+msgid "Global settings"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:20
-msgid "This settings are applied for"
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:23
+msgid "Merchant ID"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:24
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:30
+msgid "Security code"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:37
+msgid "CRC"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:44
+msgid "Save orders"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:52
+msgid "Enable sandbox mode"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:60
+msgid "Return URL"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:67
+msgid "Return Error URL"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:77
+msgid "Save changes"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:17
+msgid "Shortcode exmaples"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:18
+msgid "Basic:"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:21
+msgid "With description:"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:26
 msgid "ACF Pro is required for this plugin. Enable it on plugins page!"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:16
+#: sm-ocl-payments/Modules/Views/modal.view.php:10
+msgid "* Imię i nazwisko"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:17
+#: sm-ocl-payments/Modules/Views/modal.view.php:11
+msgid "* Adres e-mail"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:25
+#: sm-ocl-payments/Modules/Views/modal.view.php:19
+msgid "Pay"
 msgstr ""
