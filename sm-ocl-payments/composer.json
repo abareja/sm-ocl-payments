@@ -1,0 +1,29 @@
+{
+  "name": "sm/sm-ocl-payments",
+  "description": "See-me wordpress plugin with one-click payments",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+     "files": [
+        "plugin-config.php"
+      ],
+      "psr-4": {
+          "SM\\OclPayments\\Modules\\": "Modules/"
+      }
+  },
+  "authors": [
+      {
+          "name": "Adrian",
+          "email": "adrian.bareja@see-me.pl"
+      }
+  ],
+  "require": {
+    "sm/wp-plugin-core": "dev-master"
+  },
+  "repositories": [
+    {
+        "type": "vcs",
+        "url": "git@github.com:abareja/sm-plugin-core.git"
+    }
+  ]
+}

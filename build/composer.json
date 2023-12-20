@@ -1,0 +1,29 @@
+{
+  "name": "sm/{PLUGIN_NAME}",
+  "description": "{PLUGIN_DESCRIPTION}",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+     "files": [
+        "plugin-config.php"
+      ],
+      "psr-4": {
+          "SM\\{PLUGIN_NAMESPACE}\\Modules\\": "Modules/"
+      }
+  },
+  "authors": [
+      {
+          "name": "{PLUGIN_AUTHOR_NAME}",
+          "email": "{PLUGIN_AUTHOR_EMAIL}"
+      }
+  ],
+  "require": {
+    "sm/wp-plugin-core": "dev-master"
+  },
+  "repositories": [
+    {
+        "type": "vcs",
+        "url": "git@github.com:abareja/sm-plugin-core.git"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "680f766d19d12cb008c48c6afd59d283",
+    "packages": [
+        {
+            "name": "sm/wp-plugin-core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:abareja/sm-plugin-core.git",
+                "reference": "f229cd8cd73e34217e799e32398367ec709b2865"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/abareja/sm-plugin-core/zipball/f229cd8cd73e34217e799e32398367ec709b2865",
+                "reference": "f229cd8cd73e34217e799e32398367ec709b2865",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SM\\Core\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "abareja",
+                    "email": "adrian.bareja@see-me.pl"
+                }
+            ],
+            "description": "See-me wordpress plugin core",
+            "support": {
+                "source": "https://github.com/abareja/sm-plugin-core/tree/master",
+                "issues": "https://github.com/abareja/sm-plugin-core/issues"
+            },
+            "time": "2023-12-19T18:08:19+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "sm/wp-plugin-core": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.6.0"
+}

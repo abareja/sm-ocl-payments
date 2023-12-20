@@ -1,0 +1,7 @@
+{
+  "pluginName": "sm-ocl-payments",
+  "pluginDescription": "See-me wordpress plugin with one-click payments",
+  "pluginNamespace": "OclPayments",
+  "pluginAuthorName": "Adrian",
+  "pluginAuthorEmail": "adrian.bareja@see-me.pl"
+}
