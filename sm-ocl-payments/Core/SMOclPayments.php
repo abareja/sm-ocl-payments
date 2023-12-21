@@ -8,12 +8,13 @@ use SM\Core\Admin\Metabox;
 use SM\Core\Admin\ShortcodeManager;
 use SM\Core\Assets\AssetsManager;
 use SM\Core\Helpers\Helpers;
+use SM\Core\Helpers\PolylangHelpers;
 use SM\Core\Types\PostType;
 use SM\OclPayments\Config\PluginConfig;
 use SM\OclPayments\Modules\Admin\SMOclPaymentsAdminMenu;
 use SM\OclPayments\Modules\PostTypes\SMOrderType;
 
-class SMPlugin
+class SMOclPayments
 {
     protected ?HooksManager $hooksManager = null;
     protected ?PostType $postType = null;
@@ -115,14 +116,29 @@ class SMPlugin
                 return null;
             }
 
-            return static::getPaymentFormView($a['amount'], $a['description']);
+            $instanceId = uniqid('sm-ocl-payment-modal-');
+
+            static::appendModal($instanceId, $a['amount'], $a['description']);
+            return static::getButtonView($instanceId);
         });
     }
 
-    public static function getPaymentFormView(float $amount = null, string $description = "")
+    public static function getButtonView(string $instanceId)
+    {
+        return Helpers::getView(PluginConfig::getPluginDir() . '/Modules/Views/button.view.php', [
+            'instanceId' => $instanceId,
+            'label' => __('Purchase', PluginConfig::getTextDomain())
+        ]);
+    }
+
+    public static function getPaymentFormView(string $instanceId, float $amount = null, string $description = "")
     {
         if(!$amount) {
             return null;
+        }
+
+        if(empty($description)) {
+            $description = "";
         }
 
         return Helpers::getView(PluginConfig::getPluginDir() . '/Modules/Views/form.view.php', [
@@ -133,8 +149,19 @@ class SMPlugin
             'formAction' => static::isSandboxEnabled() ? static::SANDBOX_FORM_ACTION : static::FORM_ACTION,
             'md5Sum' => static::getMd5Sum($amount),
             'amount' => $amount,
-            'description' => $description
+            'description' => $description,
+            'language' => static::getLanguage(),
+            'instanceId' => $instanceId,
+            'consent' => SettingsDataStore::getOption('sm_ocl_payments_consent') ?: false,
+            'requirePhone' => SettingsDataStore::getOption('sm_ocl_payments_require_phone') ?: false
         ]);
+    }
+
+    public static function appendModal(string $instanceId, float $amount, string $description)
+    {
+        add_action('wp_footer', function() use($instanceId, $amount, $description) {
+            echo static::getPaymentFormView($instanceId, $amount, $description);
+        });
     }
 
     public static function getMd5Sum(float $amount): ?string
@@ -150,6 +177,16 @@ class SMPlugin
         return md5(implode('&', [$id, $amount, $crc, $code]));
     }
 
+    public static function getLanguage(): string
+    {
+        return PolylangHelpers::isPolylangActive() ? PolylangHelpers::getCurrentLanguage() : 'pl';
+    }
+
+    public static function formatCurrency(float $amount): string
+    {
+        return $amount . ' zł';
+    }
+
     public function initMetabox()
     {
         //Init metaboxes 
@@ -163,10 +200,20 @@ class SMPlugin
 
     public function loadAssets()
     {
+        $this->assetsManager->setVersion('0.1');
         $this->assetsManager->addStyle('sm-ocl-payments', PluginConfig::getPluginUrl() . '/assets/styles/style.css');
         $this->assetsManager->addScript('sm-ocl-payments', PluginConfig::getPluginUrl() . '/assets/js/main.js', ['jquery']);
-
+        $this->hooksManager->addAction('wp_enqueue_scripts', $this, 'initScriptVars');
+    
         $this->assetsManager->enqueue();
+
+    }
+
+    public function initScriptVars()
+    {
+        wp_localize_script('sm-ocl-payments', 'oclVars', [
+            'lang' => static::getLanguage()
+        ]);
     }
 
     public function initLocalization()

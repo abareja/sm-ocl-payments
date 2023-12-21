@@ -7,9 +7,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-20T16:29:57+00:00\n"
+"POT-Creation-Date: 2023-12-21T16:39:18+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
+
+#: sm-ocl-payments/Core/SMOclPayments.php:130
+msgid "Purchase"
+msgstr ""
 
 #: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:19
 msgid "Global settings"
@@ -36,14 +40,22 @@ msgid "Enable sandbox mode"
 msgstr ""
 
 #: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:60
+msgid "Require phone number"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:68
 msgid "Return URL"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:67
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:75
 msgid "Return Error URL"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:77
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:82
+msgid "Consent text"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:92
 msgid "Save changes"
 msgstr ""
 
@@ -63,17 +75,30 @@ msgstr ""
 msgid "ACF Pro is required for this plugin. Enable it on plugins page!"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Views/form.view.php:16
-#: sm-ocl-payments/Modules/Views/modal.view.php:10
-msgid "* Imię i nazwisko"
-msgstr ""
-
-#: sm-ocl-payments/Modules/Views/form.view.php:17
-#: sm-ocl-payments/Modules/Views/modal.view.php:11
-msgid "* Adres e-mail"
+#: sm-ocl-payments/Modules/Views/form.view.php:7
+msgid "Order"
 msgstr ""
 
 #: sm-ocl-payments/Modules/Views/form.view.php:25
-#: sm-ocl-payments/Modules/Views/modal.view.php:19
+msgid "* Firstname and lastname"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:34
+msgid "* E-mail address"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:45
+msgid "* Phone number"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:72
+msgid "You have to agree to consent."
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:80
+msgid "Amount"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:87
 msgid "Pay"
 msgstr ""

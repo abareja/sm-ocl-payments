@@ -1,0 +1,53 @@
+.sm-ocl-checkbox {
+  input {
+    display: none;
+  }
+
+  input + span {
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0em;
+      width: 1rem;
+      height: 1rem;
+      border: 1px solid #999;
+      box-sizing: border-box;
+    }
+
+    &:after {
+      content: "\2713";
+      width: 1rem;
+      height: 1rem;
+      position: absolute;
+      text-align: center;
+      line-height: 1rem;
+      top: 0;
+      left: 0;
+      color: currentColor;
+      display: none;
+    }
+  }
+
+  input:checked + span:after {
+    display: block;
+  }
+
+  label {
+    position: relative;
+    padding-left: 1.5rem;
+    cursor: hand;
+    cursor: pointer;
+    display: block;
+    line-height: 1;
+    font-size: 1rem;
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  .parsley-error input + span:before {
+    border-color: red;
+  }
+}

@@ -25,7 +25,7 @@ if (is_readable(__DIR__ . '/vendor/autoload.php')) {
 
 //Core
 require_once PluginConfig::getPluginDir() . 'Core/SMOclPayments.php';
-$plugin = new SMPlugin();
+$plugin = new SMOclPayments();
 $plugin->run();
 
 register_activation_hook(__FILE__, function() use($plugin) {

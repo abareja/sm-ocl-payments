@@ -56,6 +56,14 @@ class SettingsForm extends AdminForm
         'value' => 'true'
       ],
       [
+        'type' => 'Checkbox',
+        'label' => __('Require phone number', $textDomain),
+        'checked' => true,
+        'id' => 'sm_ocl_payments_require_phone',
+        'name' => 'sm_ocl_payments_require_phone',
+        'value' => 'true'
+      ],
+      [
         'type' => 'Text',
         'label' => __('Return URL', $textDomain),
         'id' => 'sm_ocl_payments_return_url',
@@ -68,6 +76,13 @@ class SettingsForm extends AdminForm
         'id' => 'sm_ocl_payments_return_err_url',
         'name' => 'sm_ocl_payments_return_err_url',
         'value' => home_url('/')
+      ],
+      [
+        'type' => 'Textarea',
+        'label' => __('Consent text', $textDomain),
+        'id' => 'sm_ocl_payments_consent',
+        'name' => 'sm_ocl_payments_consent',
+        'value' => ''
       ],
       [
         'type' => 'Buttons',

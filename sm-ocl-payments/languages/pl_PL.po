@@ -39,15 +39,15 @@ msgstr "Zapisz zamówienia"
 msgid "Enable sandbox mode"
 msgstr "Włącz tryb sandbox"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:60
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:68
 msgid "Return URL"
 msgstr "URL powrotu"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:67
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:75
 msgid "Return Error URL"
 msgstr "URL powrotu dla błędów"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:77
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:92
 msgid "Save changes"
 msgstr "Zapisz zmiany"
 
@@ -63,17 +63,42 @@ msgstr "Podstawowe:"
 msgid "With description:"
 msgstr "Z opisem:"
 
-#: sm-ocl-payments/Modules/Views/form.view.php:16
-#: sm-ocl-payments/Modules/Views/modal.view.php:10
-msgid "* Imię i nazwisko"
-msgstr ""
-
-#: sm-ocl-payments/Modules/Views/form.view.php:17
-#: sm-ocl-payments/Modules/Views/modal.view.php:11
-msgid "* Adres e-mail"
-msgstr ""
-
-#: sm-ocl-payments/Modules/Views/form.view.php:25
-#: sm-ocl-payments/Modules/Views/modal.view.php:19
+#: sm-ocl-payments/Modules/Views/form.view.php:87
 msgid "Pay"
 msgstr "Zapłać"
+
+#: sm-ocl-payments/Core/SMOclPayments.php:130
+msgid "Purchase"
+msgstr "Kup"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:60
+msgid "Require phone number"
+msgstr "Wymagany numer telefonu"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:82
+msgid "Consent text"
+msgstr "Treść zgody"
+
+#: sm-ocl-payments/Modules/Views/form.view.php:7
+msgid "Order"
+msgstr "Zamówienie"
+
+#: sm-ocl-payments/Modules/Views/form.view.php:80
+msgid "Amount"
+msgstr "Kwota"
+
+#: sm-ocl-payments/Modules/Views/form.view.php:25
+msgid "* Firstname and lastname"
+msgstr "* Imię i nazwisko"
+
+#: sm-ocl-payments/Modules/Views/form.view.php:34
+msgid "* E-mail address"
+msgstr "* Adres e-mail"
+
+#: sm-ocl-payments/Modules/Views/form.view.php:72
+msgid "You have to agree to consent."
+msgstr "Przed zakupem należy zaakceptować zgodę."
+
+#: sm-ocl-payments/Modules/Views/form.view.php:45
+msgid "* Phone number"
+msgstr "* Numer telefonu"

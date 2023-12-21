@@ -1,0 +1,17 @@
+.sm-ocl-input {
+  width: 100%;
+  padding: 0.75rem;
+  box-sizing: border-box;
+  border-radius: 0;
+  border: 1px solid #999;
+  font-size: 1rem;
+
+  &::placeholder {
+    font-size: 1rem;
+    color: #999;
+  }
+
+  &.parsley-error {
+    border-color: red;
+  }
+}
