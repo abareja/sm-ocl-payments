@@ -11,7 +11,7 @@ msgstr ""
 "PO-Revision-Date: 2023-12-19T11:24:56+00:00\n"
 "Language: \n"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:26
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:41
 msgid "ACF Pro is required for this plugin. Enable it on plugins page!"
 msgstr "Wtyczka ACF Pro jest wymagana do prawidłowego działania. Włącz ją na stronie zarządzania wtyczkami!"
 
@@ -27,39 +27,39 @@ msgstr "ID Sprzedającego"
 msgid "Security code"
 msgstr "Kod bezpieczeństwa"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:37
+#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:33
 msgid "CRC"
 msgstr "CRC"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:44
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:37
 msgid "Save orders"
 msgstr "Zapisz zamówienia"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:52
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:45
 msgid "Enable sandbox mode"
 msgstr "Włącz tryb sandbox"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:68
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:69
 msgid "Return URL"
 msgstr "URL powrotu"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:75
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:76
 msgid "Return Error URL"
 msgstr "URL powrotu dla błędów"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:92
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:108
 msgid "Save changes"
 msgstr "Zapisz zmiany"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:17
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:16
 msgid "Shortcode exmaples"
 msgstr "Przykładowe Shortcode"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:18
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:17
 msgid "Basic:"
 msgstr "Podstawowe:"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:21
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:20
 msgid "With description:"
 msgstr "Z opisem:"
 
@@ -67,19 +67,21 @@ msgstr "Z opisem:"
 msgid "Pay"
 msgstr "Zapłać"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:130
+#: sm-ocl-payments/blocks/block-sm-ocl-card.php:32
+#: sm-ocl-payments/Core/SMOclPayments.php:148
 msgid "Purchase"
 msgstr "Kup"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:60
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:53
 msgid "Require phone number"
 msgstr "Wymagany numer telefonu"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:82
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:83
 msgid "Consent text"
 msgstr "Treść zgody"
 
 #: sm-ocl-payments/Modules/Views/form.view.php:7
+#: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:29
 msgid "Order"
 msgstr "Zamówienie"
 
@@ -87,11 +89,11 @@ msgstr "Zamówienie"
 msgid "Amount"
 msgstr "Kwota"
 
-#: sm-ocl-payments/Modules/Views/form.view.php:25
+#: sm-ocl-payments/Modules/Views/form.view.php:24
 msgid "* Firstname and lastname"
 msgstr "* Imię i nazwisko"
 
-#: sm-ocl-payments/Modules/Views/form.view.php:34
+#: sm-ocl-payments/Modules/Views/form.view.php:33
 msgid "* E-mail address"
 msgstr "* Adres e-mail"
 
@@ -99,6 +101,88 @@ msgstr "* Adres e-mail"
 msgid "You have to agree to consent."
 msgstr "Przed zakupem należy zaakceptować zgodę."
 
-#: sm-ocl-payments/Modules/Views/form.view.php:45
+#: sm-ocl-payments/Modules/Views/form.view.php:44
 msgid "* Phone number"
 msgstr "* Numer telefonu"
+
+#: sm-ocl-payments/Core/SMOclPayments.php:251
+msgid "Status: "
+msgstr "Status: "
+
+#: sm-ocl-payments/Core/SMOclPayments.php:255
+msgid "E-mail address: "
+msgstr "Adres e-mail: "
+
+#: sm-ocl-payments/Core/SMOclPayments.php:259
+msgid "CRC: "
+msgstr "CRC: "
+
+#: sm-ocl-payments/Core/SMOclPayments.php:263
+msgid "Amount: "
+msgstr "Kwota: "
+
+#: sm-ocl-payments/Core/SMOclPayments.php:267
+msgid "Description: "
+msgstr "Opis: "
+
+#: sm-ocl-payments/Core/SMOclPayments.php:271
+msgid "Date: "
+msgstr "Data: "
+
+#: sm-ocl-payments/Core/SMOclPayments.php:275
+msgid "TPay order ID: "
+msgstr "ID zamówienia TPay: "
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:23
+msgid "With label:"
+msgstr "Z etykietą (label):"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:28
+msgid "Mandatory parameters:"
+msgstr "Obowiązkowe parametry:"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:31
+msgid "CRC - alphanumeric value, up to 128 characters, identyfing transaction or product"
+msgstr "CRC - wartość alfanumeryczna, zawierająca maksymalnie 128 znaków, identyfikująca transakcję bądź produkt"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:34
+msgid "Additional parameters:"
+msgstr "Dodatkowe parametry:"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:36
+msgid "Description"
+msgstr "Opis (description)"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:37
+msgid "Label - text displayed on button - default to \"Purchase\""
+msgstr "Etykieta (label) - tekst wyświetlany na przycisku - domyślnie \"Kup\""
+
+#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:32
+msgid "Order status"
+msgstr "Status zamówienia"
+
+#: sm-ocl-payments/Services/SMOclPaymentsMailerService.php:24
+#: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:54
+msgid "Success"
+msgstr "Sukces"
+
+#: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:55
+msgid "Failure"
+msgstr "Niepowodzenie"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:30
+msgctxt "settings page"
+msgid "Amount"
+msgstr "Kwota (amount)"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:61
+msgid "Send e-mails (requires option \"Save orders\" to be enabled)"
+msgstr "Wysyłaj e-maile (wymaga włączenia opcji \"Zapisz zamówienia\")"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:90
+msgid "Successful e-mail template"
+msgstr "Powodzenie - szablon e-maila"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:98
+msgid "Admin e-mail"
+msgstr "Adres e-mail administratora"

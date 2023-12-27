@@ -1,0 +1,28 @@
+.sm-ocl-card {
+  &__wrapper {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  &__image {
+    max-width: 100%;
+    height: auto;
+  }
+
+  &__title {
+    font-weight: bold;
+    margin-top: 0;
+    font-size: 2rem;
+  }
+}

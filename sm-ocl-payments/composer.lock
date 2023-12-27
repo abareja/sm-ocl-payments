@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:abareja/sm-plugin-core.git",
-                "reference": "00023c7b991e334d4dd43c5f32e8612a44e8b298"
+                "reference": "b3d6c91b0623d160cf46e409750f63fe9416a16e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abareja/sm-plugin-core/zipball/00023c7b991e334d4dd43c5f32e8612a44e8b298",
-                "reference": "00023c7b991e334d4dd43c5f32e8612a44e8b298",
+                "url": "https://api.github.com/repos/abareja/sm-plugin-core/zipball/b3d6c91b0623d160cf46e409750f63fe9416a16e",
+                "reference": "b3d6c91b0623d160cf46e409750f63fe9416a16e",
                 "shasum": ""
             },
             "default-branch": true,
@@ -41,7 +41,7 @@
                 "source": "https://github.com/abareja/sm-plugin-core/tree/master",
                 "issues": "https://github.com/abareja/sm-plugin-core/issues"
             },
-            "time": "2023-12-22T00:33:13+00:00"
+            "time": "2023-12-27T16:09:17+00:00"
         }
     ],
     "packages-dev": [],

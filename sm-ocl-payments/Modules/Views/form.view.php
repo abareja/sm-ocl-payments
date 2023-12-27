@@ -12,7 +12,6 @@
         action="<?php echo $formAction; ?>" 
         method="POST" 
         name="payment" 
-        target="_blank" 
         data-ocl-order-form
         class="sm-ocl-form"
       >

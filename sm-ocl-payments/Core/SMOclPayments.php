@@ -12,6 +12,7 @@ use SM\Core\Helpers\PolylangHelpers;
 use SM\Core\Types\PostType;
 use SM\OclPayments\Config\PluginConfig;
 use SM\OclPayments\Modules\Admin\SMOclPaymentsAdminMenu;
+use SM\OclPayments\Modules\PostTypes\SMEmailTemplateType;
 use SM\OclPayments\Modules\PostTypes\SMOrderType;
 use SM\OclPayments\Services\SMOclPaymentsNotificationsService;
 use SM\OclPayments\Services\SMOclPaymentsOrdersService;
@@ -19,7 +20,8 @@ use SM\OclPayments\Services\SMOclPaymentsOrdersService;
 class SMOclPayments
 {
     protected ?HooksManager $hooksManager = null;
-    protected ?PostType $postType = null;
+    protected ?PostType $orderType = null;
+    protected ?PostType $templateType = null;
     protected ?AssetsManager $assetsManager = null;
     protected ?AssetsManager $adminAssetsManager = null;
     protected ?SMOclPaymentsNotificationsService $notificationsService = null;
@@ -40,7 +42,6 @@ class SMOclPayments
     private function init(): void
     {
         (new SMOclPaymentsAdminMenu())->init();
-        $this->initFields();
         $this->initBlocks();
         $this->initShortcode();
         $this->loadAssets();
@@ -54,26 +55,50 @@ class SMOclPayments
 
     public function initSavingOrders()
     {
-        $this->postType = new SMOrderType();
-        $this->postType->init();
-        $this->postType->addToPolylang();
+        $this->orderType = new SMOrderType();
+        $this->orderType->init();
+        $this->orderType->addToPolylang();
+
+        $this->templateType = new SMEmailTemplateType();
+        $this->templateType->init();
+        $this->templateType->addToPolylang();
+
         $this->notificationsService = new SMOclPaymentsNotificationsService(self::PAYMENT_RESULT_ENDPOINT);
         $this->initOrdersMetabox();
+        $this->initTemplateFields();
     }
 
-    public function initFields()
+    public function initTemplateFields()
     {
-        // $builder = new ACFBuilder('sm-ocl-orders', 'Plugin');
-        // $builder->setLocation('post_type', '==', $this->postType->slug);
+        $builder = new ACFBuilder('sm-ocl-template', 'E-mail template details');
+        $builder->setLocation('post_type', '==', $this->templateType->slug);
 
+        $builder->addText('subject', [
+           'label' => 'E-mail subject'
+        ]);
 
-        // $builder->build();
+        $builder->addTextarea('template', [
+            'label' => 'E-mail template',
+            'instructions' => 'Possible shortcodes: [client_email], [amount], [description], [order_date], [crc], [id]',
+            'rows' => 30
+        ]);
+
+        $builder->addRepeater('attachments', [
+            'label' => 'Attachments'
+        ], [
+            [
+                'name' => 'item',
+                'label' => 'File',
+                'type' => 'file'
+            ]
+        ]);
+
+        $builder->build();
     }
 
     public function initBlocks()
     {
-        //Init ACF Blocks
-
+        //Init ACF Block
         $manager = new BlockManager('sm-ocl-block', 'SM Ocl Card');
         $manager->setBlocksDir(PluginConfig::getPluginDir() . '/blocks');
         
@@ -88,8 +113,27 @@ class SMOclPayments
         $builder->addAccordion('content-accordion', [
             'label' => 'Content',
         ]);
-
-        
+        $builder->addText('title', [
+            'label' => 'Title'
+        ]);
+        $builder->addImage('image', [
+            'label' => 'Product image'
+        ]);
+        $builder->addTextarea('description', [
+            'label' => 'Description'
+        ]);
+        $builder->addNumber('amount', [
+            'label' => 'Amount',
+            'min' => 1,
+            'append' => 'PLN'
+        ]);
+        $builder->addText('crc', [
+            'label' => 'CRC',
+            'maxlength' => 128
+        ]);
+        $builder->addText('label', [
+            'label' => 'Button label'
+        ]);
 
         $builder->build();
     }
@@ -193,7 +237,7 @@ class SMOclPayments
 
     public function initOrdersMetabox()
     {
-        $details = new Metabox('sm-ocl-order', 'Order details', $this->postType->slug);
+        $details = new Metabox('sm-ocl-order', 'Order details', $this->orderType->slug);
 
         $details->setView(function(\WP_Post $post) {
             $textDomain = PluginConfig::getTextDomain();
@@ -272,6 +316,11 @@ class SMOclPayments
     public static function isSandboxEnabled(): bool
     {
         return SettingsDataStore::getOption('sm_ocl_payments_sandbox') ?: false;
+    }
+
+    public static function sendEmailsEnabled(): bool
+    {
+        return SettingsDataStore::getOption('sm_ocl_send_mails') ?: false;
     }
 
     public function run()

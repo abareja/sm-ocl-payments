@@ -57,6 +57,14 @@ class SettingsForm extends AdminForm
         'value' => 'true'
       ],
       [
+        'type' => 'Checkbox',
+        'label' => __('Send e-mails (requires option "Save orders" to be enabled)', $textDomain),
+        'checked' => true,
+        'id' => 'sm_ocl_send_mails',
+        'name' => 'sm_ocl_send_mails',
+        'value' => 'true'
+      ],
+      [
         'type' => 'Text',
         'label' => __('Return URL', $textDomain),
         'id' => 'sm_ocl_payments_return_url',
@@ -78,6 +86,21 @@ class SettingsForm extends AdminForm
         'value' => ''
       ],
       [
+        'type' => 'Select',
+        'label' => __('Successful e-mail template', $textDomain),
+        'id' => 'sm_ocl_payments_success_template',
+        'name' => 'sm_ocl_payments_success_template',
+        'choices' => static::getTemplates(),
+        'value' => ''
+      ],
+      [
+        'type' => 'Text',
+        'label' => __('Admin e-mail', $textDomain),
+        'id' => 'sm_ocl_payments_admin_email',
+        'name' => 'sm_ocl_payments_admin_email',
+        'value' => '',
+      ],
+      [
         'type' => 'Buttons',
         'buttons' => [
           [
@@ -87,5 +110,25 @@ class SettingsForm extends AdminForm
         ]
       ]
     ];
+  }
+
+  public static function getTemplates()
+  {
+    $query = new \WP_Query([
+      'post_type' => 'sm-ocl-template',
+      'posts_per_page' => -1,
+      'fields' => 'ids'
+    ]);
+
+    if(!$query->have_posts()) {
+      return [];
+    }
+
+    $result = [];
+    foreach($query->posts ?? [] as $postId) {
+      $result[$postId] = get_the_title($postId);
+    }
+
+    return $result;
   }
 }

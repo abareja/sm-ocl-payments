@@ -148,7 +148,16 @@ class SMOclPaymentsNotificationsService
 
   public function successAction()
   {
-    return OrdersService::createOrder('success', $this->getActionData());
+    $data = $this->getActionData();
+    $orderId = OrdersService::createOrder('success', $data);
+
+    if(!$orderId) {
+      return false;
+    }
+
+    if(SMOclPayments::sendEmailsEnabled()) {
+      SMOclPaymentsMailerService::sendSuccess($data['email'] ?? '', $data);
+    }
   }
 
   public function failureAction()

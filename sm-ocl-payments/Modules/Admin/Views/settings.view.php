@@ -1,5 +1,4 @@
 <?php 
-
 use SM\OclPayments\Modules\Admin\Forms\SettingsForm;
 use SM\Core\Admin\Forms\AdminNotifications;
 use SM\Core\Helpers\Helpers;
@@ -20,15 +19,17 @@ use SM\OclPayments\Config\PluginConfig;
     <hr />
     <h4><?php _e('With description:', PluginConfig::getTextDomain()); ?></h4>
     <pre>[sm-ocl-payments amount="10.0" crc="Product-1" description="Sample payment"]</pre>
+    <hr />
+    <h4><?php _e('With label:', PluginConfig::getTextDomain()); ?></h4>
+    <pre>[sm-ocl-payments amount="10.0" crc="Product-1" description="Sample payment" label="Button label"]</pre>
   </div>
 
   <hr />
   <h3><?php _e('Mandatory parameters:', PluginConfig::getTextDomain()); ?></h3>
   <ul style="list-style: disc; padding-left: 16px;">
-    <li><?php _e('Amount', PluginConfig::getTextDomain()); ?></li>
+    <li><?php echo _x('Amount', 'settings page', PluginConfig::getTextDomain()); ?></li>
     <li><?php _e('CRC - alphanumeric value, up to 128 characters, identyfing transaction or product', PluginConfig::getTextDomain()); ?></li>
   </ul>
-
   <hr />
   <h3><?php _e('Additional parameters:', PluginConfig::getTextDomain()); ?></h3>
   <ul style="list-style: disc; padding-left: 16px;">
