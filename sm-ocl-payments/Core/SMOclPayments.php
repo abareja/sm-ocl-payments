@@ -13,20 +13,27 @@ use SM\Core\Types\PostType;
 use SM\OclPayments\Config\PluginConfig;
 use SM\OclPayments\Modules\Admin\SMOclPaymentsAdminMenu;
 use SM\OclPayments\Modules\PostTypes\SMOrderType;
+use SM\OclPayments\Services\SMOclPaymentsNotificationsService;
+use SM\OclPayments\Services\SMOclPaymentsOrdersService;
 
 class SMOclPayments
 {
     protected ?HooksManager $hooksManager = null;
     protected ?PostType $postType = null;
     protected ?AssetsManager $assetsManager = null;
-    
+    protected ?AssetsManager $adminAssetsManager = null;
+    protected ?SMOclPaymentsNotificationsService $notificationsService = null;
+
     public const FORM_ACTION = "https://secure.tpay.com";
     public const SANDBOX_FORM_ACTION = "https://secure.sandbox.tpay.com";
+    public const PAYMENT_RESULT_ENDPOINT = "ocl-payment-result";
 
     public function __construct()
     {
         $this->hooksManager = new HooksManager();
         $this->assetsManager = new AssetsManager();
+        $this->adminAssetsManager = new AssetsManager();
+        $this->adminAssetsManager->setIsAdmin(true);
         $this->init();
     }
 
@@ -36,7 +43,6 @@ class SMOclPayments
         $this->initFields();
         $this->initBlocks();
         $this->initShortcode();
-        $this->initMetabox();
         $this->loadAssets();
         $this->initLocalization();
 
@@ -51,30 +57,15 @@ class SMOclPayments
         $this->postType = new SMOrderType();
         $this->postType->init();
         $this->postType->addToPolylang();
+        $this->notificationsService = new SMOclPaymentsNotificationsService(self::PAYMENT_RESULT_ENDPOINT);
+        $this->initOrdersMetabox();
     }
 
     public function initFields()
     {
-        //Init ACF Fields for post types
-
-        // $builder = new ACFBuilder('sm-plugin', 'Plugin');
+        // $builder = new ACFBuilder('sm-ocl-orders', 'Plugin');
         // $builder->setLocation('post_type', '==', $this->postType->slug);
 
-        // $builder->addRepeater('items', [
-        //     'label' => 'Elementy',
-        //     'layout' => 'row'
-        // ], [
-        //     [
-        //         'name' => 'heading',
-        //         'label' => 'Nagłówek',
-        //         'type' => 'text'
-        //     ],
-        //     [
-        //         'name' => 'content',
-        //         'label' => 'Treść',
-        //         'type' => 'wysiwyg'
-        //     ]
-        // ]);
 
         // $builder->build();
     }
@@ -83,23 +74,24 @@ class SMOclPayments
     {
         //Init ACF Blocks
 
-        // $manager = new BlockManager('sm-plugin-blocks', 'SM Plugin');
-        // $manager->setBlocksDir(PluginConfig::getPluginDir() . '/blocks');
+        $manager = new BlockManager('sm-ocl-block', 'SM Ocl Card');
+        $manager->setBlocksDir(PluginConfig::getPluginDir() . '/blocks');
         
-        // $manager->addBlock([
-        //     'name' => 'sm-plugin',
-        //     'title' => 'SM Plugin',
-        //     'icon' => 'arrow-down-alt2'
-        // ]);
+        $manager->addBlock([
+            'name' => 'sm-ocl-card',
+            'title' => 'SM One-Click Card',
+        ]);
 
-        // $builder = new ACFBuilder('sm-plugin-block', 'Plugin block');
-        // $builder->setLocation('block', '==', 'acf/sm-plugin');
+        $builder = new ACFBuilder('sm-ocl-block', 'SM Ocl Card');
+        $builder->setLocation('block', '==', 'acf/sm-ocl-card');
 
-        // $builder->addAccordion('content-accordion', [
-        //     'label' => 'Content',
-        // ]);
+        $builder->addAccordion('content-accordion', [
+            'label' => 'Content',
+        ]);
 
-        // $builder->build();
+        
+
+        $builder->build();
     }
 
     public function initShortcode()
@@ -107,31 +99,38 @@ class SMOclPayments
         ShortcodeManager::createShortcode('sm-ocl-payments', function($atts) {
             $defaults = [
                 'amount' => null,
-                'description' => ""
+                'crc' => null,
+                'description' => '',
+                'label' => __('Purchase', PluginConfig::getTextDomain())
             ];
 
             $a = shortcode_atts($defaults, $atts);
 
-            if(!isset($a['amount'])) {
+            if(!isset($a['amount']) || !isset($a['crc'])) {
                 return null;
             }
 
             $instanceId = uniqid('sm-ocl-payment-modal-');
 
-            static::appendModal($instanceId, $a['amount'], $a['description']);
-            return static::getButtonView($instanceId);
+            static::appendModal($instanceId, $a['amount'], $a['description'], $a['crc']);
+            return static::getButtonView($instanceId, $a['label']);
         });
     }
 
-    public static function getButtonView(string $instanceId)
+    public static function getButtonView(string $instanceId, string $label)
     {
         return Helpers::getView(PluginConfig::getPluginDir() . '/Modules/Views/button.view.php', [
             'instanceId' => $instanceId,
-            'label' => __('Purchase', PluginConfig::getTextDomain())
+            'label' => $label
         ]);
     }
 
-    public static function getPaymentFormView(string $instanceId, float $amount = null, string $description = "")
+    public static function getPaymentFormView(
+        string $instanceId, 
+        float $amount = null, 
+        string $description = '', 
+        string $crc = ''
+    )
     {
         if(!$amount) {
             return null;
@@ -141,33 +140,37 @@ class SMOclPayments
             $description = "";
         }
 
+        if(empty($crc)) {
+            return null;
+        }
+
         return Helpers::getView(PluginConfig::getPluginDir() . '/Modules/Views/form.view.php', [
-            'merchantId' => SettingsDataStore::getOption('sm_ocl_payments_merchant_id'),
-            'crc' => SettingsDataStore::getOption('sm_ocl_payments_crc'),
-            'returnUrl' => SettingsDataStore::getOption('sm_ocl_payments_return_url'),
-            'returnErrorUrl' => SettingsDataStore::getOption('sm_ocl_payments_return_err_url'),
-            'formAction' => static::isSandboxEnabled() ? static::SANDBOX_FORM_ACTION : static::FORM_ACTION,
-            'md5Sum' => static::getMd5Sum($amount),
+            'crc' => $crc,
             'amount' => $amount,
             'description' => $description,
-            'language' => static::getLanguage(),
             'instanceId' => $instanceId,
+            'formAction' => static::isSandboxEnabled() ? static::SANDBOX_FORM_ACTION : static::FORM_ACTION,
+            'md5Sum' => static::getMd5Sum($amount, $crc),
+            'language' => static::getLanguage(),
+            'resultUrl' => home_url('/' . self::PAYMENT_RESULT_ENDPOINT),
+            'merchantId' => SettingsDataStore::getOption('sm_ocl_payments_merchant_id'),
+            'returnUrl' => SettingsDataStore::getOption('sm_ocl_payments_return_url'),
+            'returnErrorUrl' => SettingsDataStore::getOption('sm_ocl_payments_return_err_url'),
             'consent' => SettingsDataStore::getOption('sm_ocl_payments_consent') ?: false,
-            'requirePhone' => SettingsDataStore::getOption('sm_ocl_payments_require_phone') ?: false
+            'requirePhone' => SettingsDataStore::getOption('sm_ocl_payments_require_phone') ?: false,
         ]);
     }
 
-    public static function appendModal(string $instanceId, float $amount, string $description)
+    public static function appendModal(string $instanceId, float $amount, string $description, string $crc)
     {
-        add_action('wp_footer', function() use($instanceId, $amount, $description) {
-            echo static::getPaymentFormView($instanceId, $amount, $description);
+        add_action('wp_footer', function() use($instanceId, $amount, $description, $crc) {
+            echo static::getPaymentFormView($instanceId, $amount, $description, $crc);
         });
     }
 
-    public static function getMd5Sum(float $amount): ?string
+    public static function getMd5Sum(float $amount, string $crc): ?string
     {
         $id = SettingsDataStore::getOption('sm_ocl_payments_merchant_id') ?: false;
-        $crc = SettingsDataStore::getOption('sm_ocl_payments_crc') ?: false;
         $code = SettingsDataStore::getOption('sm_ocl_payments_security_code') ?: false;
 
         if(!$amount || !$id || !$crc || !$code) {
@@ -184,18 +187,53 @@ class SMOclPayments
 
     public static function formatCurrency(float $amount): string
     {
-        return $amount . ' zł';
+        $formatter = new \NumberFormatter(get_locale(), \NumberFormatter::CURRENCY);
+        return $formatter->formatCurrency($amount, 'PLN');
     }
 
-    public function initMetabox()
+    public function initOrdersMetabox()
     {
-        //Init metaboxes 
+        $details = new Metabox('sm-ocl-order', 'Order details', $this->postType->slug);
 
-        // $metabox = new Metabox('sm-plugin-shortcode', 'Shortcode', $location, 'side');
+        $details->setView(function(\WP_Post $post) {
+            $textDomain = PluginConfig::getTextDomain();
+            $status = SMOclPaymentsOrdersService::getOrderStatus($post->ID);
 
-        // $metabox->setView(function(\WP_Post $post) {
-        //     echo $view;
-        // });
+            echo Helpers::getView(PluginConfig::getPluginDir() . '/Modules/Admin/Views/orderDetails.view.php', [
+                'id' => $post->ID,
+                'status' => $status,
+                'details' => [
+                    [
+                        'label' => __('Status: ', $textDomain),
+                        'value' => SMOclPaymentsOrdersService::getOrderStatusBadge($post->ID)
+                    ],
+                    [
+                        'label' => __('E-mail address: ', $textDomain),
+                        'value' => get_post_meta($post->ID, 'ocl_email', true)
+                    ],
+                    [
+                        'label' => __('CRC: ', $textDomain),
+                        'value' => get_post_meta($post->ID, 'ocl_crc', true)
+                    ],
+                    [
+                        'label' => __('Amount: ', $textDomain),
+                        'value' => static::formatCurrency(get_post_meta($post->ID, 'ocl_amount', true) ?: 0)
+                    ],
+                    [
+                        'label' => __('Description: ', $textDomain),
+                        'value' => get_post_meta($post->ID, 'ocl_description', true)
+                    ],
+                    [
+                        'label' => __('Date: ', $textDomain),
+                        'value' => get_post_meta($post->ID, 'ocl_date', true)
+                    ],
+                    [
+                        'label' => __('TPay order ID: ', $textDomain),
+                        'value' => get_post_meta($post->ID, 'ocl_id', true)
+                    ]
+                ]
+            ]);
+        });
     }
 
     public function loadAssets()
@@ -206,6 +244,10 @@ class SMOclPayments
         $this->hooksManager->addAction('wp_enqueue_scripts', $this, 'initScriptVars');
     
         $this->assetsManager->enqueue();
+
+        $this->adminAssetsManager->setVersion('0.1');
+        $this->adminAssetsManager->addStyle('sm-ocl-payments-admin', PluginConfig::getPluginUrl() . '/Modules/Admin/assets/style.css');
+        $this->adminAssetsManager->enqueue();
 
     }
 
@@ -224,12 +266,12 @@ class SMOclPayments
 
     public static function saveOrders(): bool
     {
-        return SettingsDataStore::getOption('sm_ocl_payments_save_orders');
+        return SettingsDataStore::getOption('sm_ocl_payments_save_orders') ?: false;
     }
 
     public static function isSandboxEnabled(): bool
     {
-        return SettingsDataStore::getOption('sm_ocl_payments_sandbox');
+        return SettingsDataStore::getOption('sm_ocl_payments_sandbox') ?: false;
     }
 
     public function run()

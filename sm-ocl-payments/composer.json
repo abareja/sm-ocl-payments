@@ -8,7 +8,8 @@
         "plugin-config.php"
       ],
       "psr-4": {
-          "SM\\OclPayments\\Modules\\": "Modules/"
+          "SM\\OclPayments\\Modules\\": "Modules/",
+          "SM\\OclPayments\\Services\\": "Services/"
       }
   },
   "authors": [

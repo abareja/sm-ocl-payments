@@ -53,6 +53,7 @@
         <input type="hidden" name="description" value="<?php echo $description ?: 'test'; ?>"/>
         <input type="hidden" name="md5sum" value="<?php echo $md5Sum; ?>"/>
         <input type="hidden" name="language" value="<?php echo $language; ?>" />
+        <input type="hidden" name="result_url" value="<?php echo $resultUrl; ?>" />
 
         <?php if(isset($returnUrl) && $returnUrl): ?>
           <input type="hidden" name="return_url" value="<?php echo $returnUrl; ?>" />

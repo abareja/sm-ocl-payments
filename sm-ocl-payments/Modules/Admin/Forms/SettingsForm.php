@@ -33,13 +33,6 @@ class SettingsForm extends AdminForm
         'value' => ''
       ],
       [
-        'type' => 'Text',
-        'label' => __('CRC', $textDomain),
-        'id' => 'sm_ocl_payments_crc',
-        'name' => 'sm_ocl_payments_crc',
-        'value' => ''
-      ],
-      [
         'type' => 'Checkbox',
         'label' => __('Save orders', $textDomain),
         'checked' => true,

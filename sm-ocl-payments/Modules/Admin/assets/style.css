@@ -1,0 +1,15 @@
+.sm-ocl-status {
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+}
+
+.sm-ocl-status--success {
+  background: green;
+  color: #fff;
+}
+
+.sm-ocl-status--failure {
+  background: red;
+  color: #fff;
+}
