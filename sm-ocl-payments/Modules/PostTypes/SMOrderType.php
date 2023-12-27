@@ -17,7 +17,8 @@ class SMOrderType extends PostType
         ],
         'supports' => ['title'],
         'menu_icon' => 'dashicons-cart',
-        'public' => false
+        'public' => false,
+        'rewrite' => false
     ];
 
     public function init()
