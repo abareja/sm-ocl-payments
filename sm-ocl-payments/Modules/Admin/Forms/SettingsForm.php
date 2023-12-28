@@ -101,6 +101,14 @@ class SettingsForm extends AdminForm
         'value' => '',
       ],
       [
+        'type' => 'Checkbox',
+        'label' => __('Enable discount codes support', $textDomain),
+        'id' => 'sm_ocl_payments_enable_discounts',
+        'name' => 'sm_ocl_payments_enable_discounts',
+        'value' => 'true',
+        'checked' => true
+      ],
+      [
         'type' => 'Buttons',
         'buttons' => [
           [

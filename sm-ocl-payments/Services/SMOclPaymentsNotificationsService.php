@@ -156,7 +156,8 @@ class SMOclPaymentsNotificationsService
     }
 
     if(SMOclPayments::sendEmailsEnabled()) {
-      SMOclPaymentsMailerService::sendSuccess($data['email'] ?? '', $data);
+      $send = SMOclPaymentsMailerService::sendSuccess($data['email'] ?? '', $data);
+      update_post_meta($orderId, 'ocl_email_send', $send);
     }
   }
 

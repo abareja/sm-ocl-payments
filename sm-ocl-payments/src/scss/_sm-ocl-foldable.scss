@@ -1,0 +1,33 @@
+.sm-ocl-foldable {
+  &__handle {
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding-right: 1.5rem;
+
+    &:after {
+      content: '';
+      display: inline-block;
+      width: 0.5em;
+      height: 0.5em;
+      border-bottom: 1px solid #999;
+      border-right: 1px solid #999;
+      transform: rotate(45deg);
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+  }
+
+  &.is-open &__handle:after {
+    transform: rotate(225deg);
+  }
+
+  &__content {
+    display: none;
+
+    &:before {
+      content: '';
+      display: block;
+      height: 1rem; 
+    }
+  }
+}

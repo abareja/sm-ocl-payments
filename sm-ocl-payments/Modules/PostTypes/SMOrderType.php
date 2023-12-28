@@ -5,10 +5,12 @@ namespace SM\OclPayments\Modules\PostTypes;
 use SM\Core\Types\PostType;
 use SM\OclPayments\Config\PluginConfig;
 use SM\OclPayments\Services\SMOclPaymentsOrdersService;
+use SMOclPayments;
 
 class SMOrderType extends PostType
 {
     public string $slug = 'sm-ocl-order';
+    public string $taxonomy = 'sm-ocl-discounts';
     protected array $args = [
         'labels' => [
             'name' => 'SM One-Click Orders',
@@ -21,23 +23,21 @@ class SMOrderType extends PostType
         'rewrite' => false
     ];
 
-    public function init()
+    public function initAdmin()
     {
-       parent::init();
+        add_filter('manage_sm-ocl-order_posts_columns', function ($columns) {
+            $offset = array_search('date', array_keys($columns));
+            return array_merge(
+                array_slice($columns, 0, $offset),
+                [
+                    'sm-ocl-status' => __('Order status', PluginConfig::getTextDomain()),
+                    'sm-ocl-crc' => __('CRC', PluginConfig::getTextDomain())
+                ],
+                array_slice($columns, $offset, null)
+            );
+        });
 
-       add_filter('manage_sm-ocl-order_posts_columns', function ($columns) {
-        $offset = array_search('date', array_keys($columns));
-        return array_merge(
-            array_slice($columns, 0, $offset),
-            [
-                'sm-ocl-status' => __('Order status', PluginConfig::getTextDomain()),
-                'sm-ocl-crc' => __('CRC', PluginConfig::getTextDomain())
-            ],
-            array_slice($columns, $offset, null)
-        );
-       });
-
-       add_action('manage_sm-ocl-order_posts_custom_column', function ($columnName, $postId) {
+        add_action('manage_sm-ocl-order_posts_custom_column', function ($columnName, $postId) {
         if($columnName === 'sm-ocl-status') {
             echo SMOclPaymentsOrdersService::getOrderStatusBadge($postId);
         }
@@ -45,6 +45,35 @@ class SMOrderType extends PostType
         if($columnName === 'sm-ocl-crc') {
             echo get_post_meta($postId, 'ocl_crc', true);
         }
-       }, 10, 2);
+        }, 10, 2);
+    }
+
+    public function registerTaxonomy()
+    {
+        add_action('init', function() {
+            register_taxonomy(
+                $this->taxonomy,
+                $this->slug,
+                [
+                    'hierarchical' => false,
+                    'label' => 'Discount codes',
+                    'publicly_queryable' => false,
+                    'show_in_rest' => false,
+                    'query_var' => false,
+                    'rewrite' => 'false'
+                ]
+            );
+        });
+    }
+
+    public function init()
+    {
+       parent::init();
+
+        $this->initAdmin();
+
+        if(SMOclPayments::isDiscountsEnabled()) {
+            $this->registerTaxonomy();
+        }
     }
 }
