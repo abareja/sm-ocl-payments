@@ -31,11 +31,27 @@ class SMOclPaymentsDiscountsService
       exit;
     }
 
-    $discount = static::getDiscount($params->code);
+    $discountTerm = static::getDiscountTerm($params->code);
+
+    if(!$discountTerm) {
+      wp_send_json_error([
+        'message' => __('Discount code does not exist', PluginConfig::getTextDomain())
+      ]);
+      exit;
+    }
+
+    if(!static::isDiscountActive($discountTerm)) {
+      wp_send_json_error([
+        'message' => __('Discount code is not active', PluginConfig::getTextDomain())
+      ]);
+      exit;
+    }
+
+    $discount = static::getDiscount($discountTerm);
 
     if($discount === false) {
       wp_send_json_error([
-        'message' => __('Discount code does not exist', PluginConfig::getTextDomain())
+        'message' => __('Discount code is not valid', PluginConfig::getTextDomain())
       ]);
       exit;
     }
@@ -45,11 +61,12 @@ class SMOclPaymentsDiscountsService
 
     wp_send_json_success([
       'amount' => $newAmount,
+      'fullAmount' => SMOclPayments::formatCurrency($newAmount),
       'md5sum' => $newMd5Sum,
       'message' => __('Discount code applied', PluginConfig::getTextDomain()),
       'code' => $params->code,
       'discount' => $discount,
-      'discountTerm' => static::getDiscountTerm($params->code)
+      'discountTerm' => $discountTerm
     ]);
     exit;
   }
@@ -78,14 +95,17 @@ class SMOclPaymentsDiscountsService
     return $term->term_id;
   }
 
-  public static function getDiscount(string $code): int | bool
+  public static function isDiscountActive(int $discountTermId): bool
   {
-    $discountTerm = static::getDiscountTerm($code);
+    return (bool) (get_field('active', 'term_' . $discountTermId)) ?? false;
+  }
 
-    if(!$discountTerm) {
+  public static function getDiscount(int $discountTermId): int | bool
+  {
+    if(!$discountTermId) {
       return false;
     }
 
-    return (int) (get_field('discount', 'term_' . $discountTerm)) ?? 0;
+    return (int) (get_field('discount', 'term_' . $discountTermId)) ?? 0;
   }
 }

@@ -94,9 +94,22 @@
         <?php endif; ?>
 
         <div class="sm-ocl-form__summary">
-          <p><strong><?php _e('Amount', PluginConfig::getTextDomain()); ?></strong>:
-          <?php echo SMOclPayments::formatCurrency($amount); ?></p>
+          <p>
+            <strong>
+              <?php _e('Amount', PluginConfig::getTextDomain()); ?>:
+            </strong>
+            <span data-ocl-order-form-amount class="sm-ocl-form__amount">
+              <?php echo SMOclPayments::formatCurrency($amount); ?>
+            </span>
+            <span data-ocl-order-form-discount-amount></span>
+          </p>
         </div>
+
+        <?php if(isset($enableDiscounts) && $enableDiscounts): ?>
+          <div class="sm-ocl-form__discount">
+            <p class="sm-ocl-form__discount-message" data-ocl-discount-message></p>
+          </div>
+        <?php endif; ?>
 
         <input 
           type="submit" 

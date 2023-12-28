@@ -72,6 +72,9 @@ const initDiscounts = async () => {
         const md5SumInput = form.querySelector('input[name="md5sum"]');
         const applyBtn = form.querySelector('[data-ocl-discount-submit]');
         const resultUrlInput = form.querySelector('input[name="result_url"]');
+        const message = form.querySelector('[data-ocl-discount-message]');
+        const amountDisplay = form.querySelector('[data-ocl-order-form-amount]');
+        const discountAmountDisplay = form.querySelector('[data-ocl-order-form-discount-amount]');
 
         applyBtn.addEventListener('click', e => {
             e.preventDefault();
@@ -95,9 +98,14 @@ const initDiscounts = async () => {
                         newResultUrl.searchParams.set('discount', discountTerm);
                         resultUrlInput.value = newResultUrl;
                     }
-                }
-            }).catch(() => {
 
+                    amountDisplay.classList.add('is-discount');
+                    discountAmountDisplay.innerHTML = `${response.data.fullAmount} (-${response.data.discount}%)`;
+                }
+
+                message.innerHTML = response.data.message;
+            }).catch(error => {
+                console.error(error);
             });
         })
     }); 

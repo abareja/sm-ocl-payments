@@ -114,6 +114,10 @@ class SMOclPayments
            'max' => 100,
            'append' => '%'
         ]);
+        $builder->addTrueFalse('active', [
+            'label' => 'Is active?',
+            'default_value' => true
+        ]);
 
         $builder->build();
     }

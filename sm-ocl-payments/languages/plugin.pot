@@ -7,41 +7,54 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-27T21:00:18+00:00\n"
+"POT-Creation-Date: 2023-12-28T15:30:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 
 #: sm-ocl-payments/blocks/block-sm-ocl-card.php:32
-#: sm-ocl-payments/Core/SMOclPayments.php:148
+#: sm-ocl-payments/Core/SMOclPayments.php:170
 msgid "Purchase"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:251
+#: sm-ocl-payments/Core/SMOclPayments.php:271
 msgid "Status: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:255
+#: sm-ocl-payments/Core/SMOclPayments.php:275
 msgid "E-mail address: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:259
+#: sm-ocl-payments/Core/SMOclPayments.php:279
 msgid "CRC: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:263
+#: sm-ocl-payments/Core/SMOclPayments.php:283
 msgid "Amount: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:267
+#: sm-ocl-payments/Core/SMOclPayments.php:287
 msgid "Description: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:271
+#: sm-ocl-payments/Core/SMOclPayments.php:291
 msgid "Date: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:275
+#: sm-ocl-payments/Core/SMOclPayments.php:295
 msgid "TPay order ID: "
+msgstr ""
+
+#: sm-ocl-payments/Core/SMOclPayments.php:302
+msgid "Email status: "
+msgstr ""
+
+#: sm-ocl-payments/Core/SMOclPayments.php:303
+msgid "Sent"
+msgstr ""
+
+#: sm-ocl-payments/Core/SMOclPayments.php:303
+#: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:55
+msgid "Failure"
 msgstr ""
 
 #: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:19
@@ -92,7 +105,11 @@ msgstr ""
 msgid "Admin e-mail"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:108
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:105
+msgid "Enable discount codes support"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:116
 msgid "Save changes"
 msgstr ""
 
@@ -141,11 +158,11 @@ msgstr ""
 msgid "ACF Pro is required for this plugin. Enable it on plugins page!"
 msgstr ""
 
-#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:32
+#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:33
 msgid "Order status"
 msgstr ""
 
-#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:33
+#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:34
 msgid "CRC"
 msgstr ""
 
@@ -166,23 +183,43 @@ msgstr ""
 msgid "* Phone number"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Views/form.view.php:72
+#: sm-ocl-payments/Modules/Views/form.view.php:51
+msgid "Have discount code?"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:58
+msgid "Discount code"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:61
+msgid "Apply"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Views/form.view.php:89
 msgid "You have to agree to consent."
 msgstr ""
 
-#: sm-ocl-payments/Modules/Views/form.view.php:80
+#: sm-ocl-payments/Modules/Views/form.view.php:97
 msgid "Amount"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Views/form.view.php:87
+#: sm-ocl-payments/Modules/Views/form.view.php:104
 msgid "Pay"
+msgstr ""
+
+#: sm-ocl-payments/Services/SMOclPaymentsDiscountsService.php:29
+msgid "Invalid form data"
+msgstr ""
+
+#: sm-ocl-payments/Services/SMOclPaymentsDiscountsService.php:38
+msgid "Discount code does not exist"
+msgstr ""
+
+#: sm-ocl-payments/Services/SMOclPaymentsDiscountsService.php:49
+msgid "Discount code applied"
 msgstr ""
 
 #: sm-ocl-payments/Services/SMOclPaymentsMailerService.php:24
 #: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:54
 msgid "Success"
-msgstr ""
-
-#: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:55
-msgid "Failure"
 msgstr ""
