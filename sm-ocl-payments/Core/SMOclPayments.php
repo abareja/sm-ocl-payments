@@ -331,14 +331,14 @@ class SMOclPayments
 
     public function loadAssets()
     {
-        $this->assetsManager->setVersion('0.1');
+        $this->assetsManager->setVersion('1.0.0');
         $this->assetsManager->addStyle('sm-ocl-payments', PluginConfig::getPluginUrl() . '/assets/styles/style.css');
         $this->assetsManager->addScript('sm-ocl-payments', PluginConfig::getPluginUrl() . '/assets/js/main.js', ['jquery']);
         $this->hooksManager->addAction('wp_enqueue_scripts', $this, 'initScriptVars');
     
         $this->assetsManager->enqueue();
 
-        $this->adminAssetsManager->setVersion('0.1');
+        $this->adminAssetsManager->setVersion('1.0.0');
         $this->adminAssetsManager->addStyle('sm-ocl-payments-admin', PluginConfig::getPluginUrl() . '/Modules/Admin/assets/style.css');
         $this->adminAssetsManager->enqueue();
 
