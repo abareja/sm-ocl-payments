@@ -56,11 +56,12 @@ class SMOrderType extends PostType
                 $this->slug,
                 [
                     'hierarchical' => false,
-                    'label' => 'Discount codes',
+                    'label' => __('Discount codes', PluginConfig::getTextDomain()),
                     'publicly_queryable' => false,
                     'show_in_rest' => false,
                     'query_var' => false,
-                    'rewrite' => 'false'
+                    'rewrite' => false,
+                    'meta_box_cb' => false
                 ]
             );
         });

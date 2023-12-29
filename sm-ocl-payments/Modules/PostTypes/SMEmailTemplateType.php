@@ -16,6 +16,7 @@ class SMEmailTemplateType extends PostType
         'supports' => ['title'],
         'menu_icon' => 'dashicons-email',
         'public' => false,
+        'publicly_queryable' => false,
         'show_in_rest' => false,
     ];
 }

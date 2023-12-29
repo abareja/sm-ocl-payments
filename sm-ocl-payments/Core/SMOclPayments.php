@@ -77,26 +77,27 @@ class SMOclPayments
 
     public function initTemplateFields()
     {
-        $builder = new ACFBuilder('sm-ocl-template', 'E-mail template details');
+        $builder = new ACFBuilder('sm-ocl-template', __('E-mail template details', PluginConfig::getTextDomain()));
         $builder->setLocation('post_type', '==', $this->templateType->slug);
 
         $builder->addText('subject', [
-           'label' => 'E-mail subject'
+           'label' => __('E-mail subject', PluginConfig::getTextDomain())
         ]);
 
         $builder->addTextarea('template', [
-            'label' => 'E-mail template',
-            'instructions' => 'Possible shortcodes: [client_email], [amount], [description], [order_date], [crc], [id]',
+            'label' => __('E-mail template', PluginConfig::getTextDomain()),
+            'instructions' => __('Possible shortcodes: [client_email], [amount], [description], [order_date], [crc], [id]', PluginConfig::getTextDomain()),
             'rows' => 30
         ]);
 
         $builder->addRepeater('attachments', [
-            'label' => 'Attachments'
+            'label' => __('Attachments', PluginConfig::getTextDomain()),
+            'button_label' => __('Add attachment', PluginConfig::getTextDomain())
         ], [
             [
                 'name' => 'item',
-                'label' => 'File',
-                'type' => 'file'
+                'label' => __('File', PluginConfig::getTextDomain()),
+                'type' => 'file',
             ]
         ]);
 
@@ -109,13 +110,13 @@ class SMOclPayments
         $builder->setLocation('taxonomy', '==', 'sm-ocl-discounts');
 
         $builder->addNumber('discount', [
-           'label' => 'Discount',
+           'label' => __('Discount', PluginConfig::getTextDomain()),
            'min' => 1,
            'max' => 100,
            'append' => '%'
         ]);
         $builder->addTrueFalse('active', [
-            'label' => 'Is active?',
+            'label' => __('Is active?', PluginConfig::getTextDomain()),
             'default_value' => true
         ]);
 
@@ -125,7 +126,7 @@ class SMOclPayments
     public function initBlocks()
     {
         //Init ACF Block
-        $manager = new BlockManager('sm-ocl-block', 'SM Ocl Card');
+        $manager = new BlockManager('sm-ocl-block', 'SM OCL Card');
         $manager->setBlocksDir(PluginConfig::getPluginDir() . '/blocks');
         
         $manager->addBlock([
@@ -133,7 +134,7 @@ class SMOclPayments
             'title' => 'SM One-Click Card',
         ]);
 
-        $builder = new ACFBuilder('sm-ocl-block', 'SM Ocl Card');
+        $builder = new ACFBuilder('sm-ocl-block', 'SM OCL Card');
         $builder->setLocation('block', '==', 'acf/sm-ocl-card');
 
         $builder->addAccordion('content-accordion', [
@@ -264,7 +265,7 @@ class SMOclPayments
 
     public function initOrdersMetabox()
     {
-        $details = new Metabox('sm-ocl-order', 'Order details', $this->orderType->slug);
+        $details = new Metabox('sm-ocl-order', __('Order details', PluginConfig::getTextDomain()), $this->orderType->slug);
 
         $details->setView(function(\WP_Post $post) {
             $textDomain = PluginConfig::getTextDomain();
