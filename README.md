@@ -1,17 +1,37 @@
-# SM Plugin Starter
+# SM One-Click Payments
 
-Wordpress plugin starter for development
+Wordpress plugins that allows you to insert payment form wherever you want.
 
-## To start using
+## Overview:
 
-Follow these steps: 
+### Depends on:
 
-1. Set variables in config.json
-2. Set plugin name in package.json
-3. Set config in ./sm-plugin-starter/plugin-config.php
-4. Run `npm run initialize`
+- ACF Pro
+
+### Features:
+
+- Lot of settings enabling to customize plugin
+- Shortcode
+- ACF Block
+- Saving orders in custom post type `sm-ocl-order`
+- Support for discount codes (adding, setting active, ability to disable support)
+- Sending e-mails with attachments
+- Customizable e-mail templates
+- Settings page
+- Polylang support
+
+## Docs:
+
+### Shortcode
+
+#### Podstawowe:
+[sm-ocl-payments amount="10.0" crc="Product-1"]
+
+#### Z opisem:
+[sm-ocl-payments amount="10.0" crc="Product-1" description="Sample payment"]
+
+#### Z etykietą (label):
+[sm-ocl-payments amount="10.0" crc="Product-1" description="Sample payment" label="Button label"]
 
 ---
 Made for <a href="https://see-me.pl" target="_blank">SEE-ME</a> by Adrian Bareja
-
-
