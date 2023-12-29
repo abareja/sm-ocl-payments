@@ -14,9 +14,9 @@ Wordpress plugins that allows you to insert payment form wherever you want.
 - Shortcode
 - ACF Block
 - Saving orders in custom post type `sm-ocl-order`
-- Support for discount codes (adding, setting active, ability to disable support)
+- Support for discount codes (adding, setting active, ability to disable support) - taxonomy `sm-ocl-discounts`
 - Sending e-mails with attachments
-- Customizable e-mail templates
+- Customizable e-mail templates - custom post type `sm-ocl-template`
 - Settings page
 - Polylang support
 
