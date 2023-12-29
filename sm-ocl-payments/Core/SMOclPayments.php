@@ -14,6 +14,7 @@ use SM\OclPayments\Config\PluginConfig;
 use SM\OclPayments\Modules\Admin\SMOclPaymentsAdminMenu;
 use SM\OclPayments\Modules\PostTypes\SMEmailTemplateType;
 use SM\OclPayments\Modules\PostTypes\SMOrderType;
+use SM\OclPayments\Services\SMOclPaymentsDiscountsService;
 use SM\OclPayments\Services\SMOclPaymentsNotificationsService;
 use SM\OclPayments\Services\SMOclPaymentsOrdersService;
 
@@ -51,6 +52,12 @@ class SMOclPayments
         {
             $this->initSavingOrders();
         }
+
+        if(static::isDiscountsEnabled())
+        {
+            $this->initDiscountsFields();
+            SMOclPaymentsDiscountsService::init();
+        }
     }
 
     public function initSavingOrders()
@@ -70,27 +77,47 @@ class SMOclPayments
 
     public function initTemplateFields()
     {
-        $builder = new ACFBuilder('sm-ocl-template', 'E-mail template details');
+        $builder = new ACFBuilder('sm-ocl-template', __('E-mail template details', PluginConfig::getTextDomain()));
         $builder->setLocation('post_type', '==', $this->templateType->slug);
 
         $builder->addText('subject', [
-           'label' => 'E-mail subject'
+           'label' => __('E-mail subject', PluginConfig::getTextDomain())
         ]);
 
         $builder->addTextarea('template', [
-            'label' => 'E-mail template',
-            'instructions' => 'Possible shortcodes: [client_email], [amount], [description], [order_date], [crc], [id]',
+            'label' => __('E-mail template', PluginConfig::getTextDomain()),
+            'instructions' => __('Possible shortcodes: [client_email], [amount], [description], [order_date], [crc], [id]', PluginConfig::getTextDomain()),
             'rows' => 30
         ]);
 
         $builder->addRepeater('attachments', [
-            'label' => 'Attachments'
+            'label' => __('Attachments', PluginConfig::getTextDomain()),
+            'button_label' => __('Add attachment', PluginConfig::getTextDomain())
         ], [
             [
                 'name' => 'item',
-                'label' => 'File',
-                'type' => 'file'
+                'label' => __('File', PluginConfig::getTextDomain()),
+                'type' => 'file',
             ]
+        ]);
+
+        $builder->build();
+    }
+
+    public function initDiscountsFields()
+    {
+        $builder = new ACFBuilder('sm-ocl-discounts', 'Discounts');
+        $builder->setLocation('taxonomy', '==', 'sm-ocl-discounts');
+
+        $builder->addNumber('discount', [
+           'label' => __('Discount', PluginConfig::getTextDomain()),
+           'min' => 1,
+           'max' => 100,
+           'append' => '%'
+        ]);
+        $builder->addTrueFalse('active', [
+            'label' => __('Is active?', PluginConfig::getTextDomain()),
+            'default_value' => true
         ]);
 
         $builder->build();
@@ -99,7 +126,7 @@ class SMOclPayments
     public function initBlocks()
     {
         //Init ACF Block
-        $manager = new BlockManager('sm-ocl-block', 'SM Ocl Card');
+        $manager = new BlockManager('sm-ocl-block', 'SM OCL Card');
         $manager->setBlocksDir(PluginConfig::getPluginDir() . '/blocks');
         
         $manager->addBlock([
@@ -107,7 +134,7 @@ class SMOclPayments
             'title' => 'SM One-Click Card',
         ]);
 
-        $builder = new ACFBuilder('sm-ocl-block', 'SM Ocl Card');
+        $builder = new ACFBuilder('sm-ocl-block', 'SM OCL Card');
         $builder->setLocation('block', '==', 'acf/sm-ocl-card');
 
         $builder->addAccordion('content-accordion', [
@@ -202,6 +229,7 @@ class SMOclPayments
             'returnErrorUrl' => SettingsDataStore::getOption('sm_ocl_payments_return_err_url'),
             'consent' => SettingsDataStore::getOption('sm_ocl_payments_consent') ?: false,
             'requirePhone' => SettingsDataStore::getOption('sm_ocl_payments_require_phone') ?: false,
+            'enableDiscounts' => SettingsDataStore::getOption('sm_ocl_payments_enable_discounts') ?: false
         ]);
     }
 
@@ -237,45 +265,66 @@ class SMOclPayments
 
     public function initOrdersMetabox()
     {
-        $details = new Metabox('sm-ocl-order', 'Order details', $this->orderType->slug);
+        $details = new Metabox('sm-ocl-order', __('Order details', PluginConfig::getTextDomain()), $this->orderType->slug);
 
         $details->setView(function(\WP_Post $post) {
             $textDomain = PluginConfig::getTextDomain();
             $status = SMOclPaymentsOrdersService::getOrderStatus($post->ID);
 
+            $details = [
+                [
+                    'label' => __('Status: ', $textDomain),
+                    'value' => SMOclPaymentsOrdersService::getOrderStatusBadge($post->ID)
+                ],
+                [
+                    'label' => __('E-mail address: ', $textDomain),
+                    'value' => get_post_meta($post->ID, 'ocl_email', true)
+                ],
+                [
+                    'label' => __('CRC: ', $textDomain),
+                    'value' => get_post_meta($post->ID, 'ocl_crc', true)
+                ],
+                [
+                    'label' => __('Amount: ', $textDomain),
+                    'value' => static::formatCurrency(get_post_meta($post->ID, 'ocl_amount', true) ?: 0)
+                ],
+                [
+                    'label' => __('Description: ', $textDomain),
+                    'value' => get_post_meta($post->ID, 'ocl_description', true)
+                ],
+                [
+                    'label' => __('Date: ', $textDomain),
+                    'value' => get_post_meta($post->ID, 'ocl_date', true)
+                ],
+                [
+                    'label' => __('TPay order ID: ', $textDomain),
+                    'value' => get_post_meta($post->ID, 'ocl_id', true)
+                ]
+            ];
+
+            if(get_post_meta($post->ID, 'ocl_email_send', true) !== null) {
+                $details[] = [
+                    'label' => __('Email status: ', $textDomain),
+                    'value' => boolval(get_post_meta($post->ID, 'ocl_email_send', true)) ? __('Sent', $textDomain) : __('Failure', $textDomain)
+                ];
+            }
+
+            if(get_post_meta($post->ID, 'ocl_discount', true)) {
+                $discountTermId = (int) get_post_meta($post->ID, 'ocl_discount', true);
+                $details[] = [
+                    'label' => __('Discount code: ', $textDomain),
+                    'value' => SMOclPaymentsDiscountsService::getDiscountCodeById($discountTermId)
+                ];
+                $details[] = [
+                    'label' => __('Discount: ', $textDomain),
+                    'value' => SMOclPaymentsDiscountsService::getDiscount($discountTermId) . '%'
+                ];
+            }
+
             echo Helpers::getView(PluginConfig::getPluginDir() . '/Modules/Admin/Views/orderDetails.view.php', [
                 'id' => $post->ID,
                 'status' => $status,
-                'details' => [
-                    [
-                        'label' => __('Status: ', $textDomain),
-                        'value' => SMOclPaymentsOrdersService::getOrderStatusBadge($post->ID)
-                    ],
-                    [
-                        'label' => __('E-mail address: ', $textDomain),
-                        'value' => get_post_meta($post->ID, 'ocl_email', true)
-                    ],
-                    [
-                        'label' => __('CRC: ', $textDomain),
-                        'value' => get_post_meta($post->ID, 'ocl_crc', true)
-                    ],
-                    [
-                        'label' => __('Amount: ', $textDomain),
-                        'value' => static::formatCurrency(get_post_meta($post->ID, 'ocl_amount', true) ?: 0)
-                    ],
-                    [
-                        'label' => __('Description: ', $textDomain),
-                        'value' => get_post_meta($post->ID, 'ocl_description', true)
-                    ],
-                    [
-                        'label' => __('Date: ', $textDomain),
-                        'value' => get_post_meta($post->ID, 'ocl_date', true)
-                    ],
-                    [
-                        'label' => __('TPay order ID: ', $textDomain),
-                        'value' => get_post_meta($post->ID, 'ocl_id', true)
-                    ]
-                ]
+                'details' => $details
             ]);
         });
     }
@@ -298,7 +347,8 @@ class SMOclPayments
     public function initScriptVars()
     {
         wp_localize_script('sm-ocl-payments', 'oclVars', [
-            'lang' => static::getLanguage()
+            'lang' => static::getLanguage(),
+            'ajaxURL' => admin_url('admin-ajax.php')
         ]);
     }
 
@@ -321,6 +371,11 @@ class SMOclPayments
     public static function sendEmailsEnabled(): bool
     {
         return SettingsDataStore::getOption('sm_ocl_send_mails') ?: false;
+    }
+
+    public static function isDiscountsEnabled(): bool
+    {
+        return SettingsDataStore::getOption('sm_ocl_payments_enable_discounts') ?: false;
     }
 
     public function run()

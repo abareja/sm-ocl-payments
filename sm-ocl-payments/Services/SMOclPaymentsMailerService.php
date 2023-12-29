@@ -8,17 +8,17 @@ use SMOclPayments;
 
 class SMOclPaymentsMailerService
 {
-  public static function sendSuccess($to, array $data = [])
+  public static function sendSuccess($to, array $data = []): bool
   {
     if(empty($to)) {
-      return;
+      return false;
     }
 
     $receivers[] = $to;
     $templateId = SettingsDataStore::getOption('sm_ocl_payments_success_template') ?: false;
 
     if(!$templateId) {
-      return;
+      return false;
     }
 
     $subject = get_field('subject', $templateId) ?: __('Success', PluginConfig::getTextDomain());

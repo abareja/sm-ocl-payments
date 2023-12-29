@@ -46,6 +46,25 @@
           </p>
         <?php endif; ?>
 
+        <?php if(isset($enableDiscounts) && $enableDiscounts): ?>
+          <div data-ocl-foldable class="sm-ocl-foldable">
+            <p data-ocl-foldable-handle class="sm-ocl-foldable__handle"><?php _e('Have discount code?', PluginConfig::getTextDomain()); ?></p>
+            <div data-ocl-foldable-content class="sm-ocl-foldable__content">
+              <div class="sm-ocl-form__discount-wrap">
+                <p class="sm-col-parsley-validate">
+                  <input
+                    type="text"
+                    name="discount-code"
+                    class="sm-ocl-input"
+                    placeholder="<?php _e('Discount code', PluginConfig::getTextDomain()); ?>"
+                  />
+                </p>
+                <button type="button" class="sm-ocl-button sm-ocl-button--black" data-ocl-discount-submit><?php _e('Apply', PluginConfig::getTextDomain()); ?></button>
+              </div>  
+            </div>
+          </div>
+        <?php endif; ?>
+
         <input type="hidden" name="id" value="<?php echo $merchantId; ?>"/>
         <input type="hidden" name="crc" value="<?php echo $crc; ?>"/>
         <input type="hidden" name="amount" value="<?php echo $amount; ?>" />
@@ -77,9 +96,22 @@
         <?php endif; ?>
 
         <div class="sm-ocl-form__summary">
-          <p><strong><?php _e('Amount', PluginConfig::getTextDomain()); ?></strong>:
-          <?php echo SMOclPayments::formatCurrency($amount); ?></p>
+          <p>
+            <strong>
+              <?php _e('Amount', PluginConfig::getTextDomain()); ?>:
+            </strong>
+            <span data-ocl-order-form-amount class="sm-ocl-form__amount">
+              <?php echo SMOclPayments::formatCurrency($amount); ?>
+            </span>
+            <span data-ocl-order-form-discount-amount></span>
+          </p>
         </div>
+
+        <?php if(isset($enableDiscounts) && $enableDiscounts): ?>
+          <div class="sm-ocl-form__discount">
+            <p class="sm-ocl-form__discount-message" data-ocl-discount-message></p>
+          </div>
+        <?php endif; ?>
 
         <input 
           type="submit" 

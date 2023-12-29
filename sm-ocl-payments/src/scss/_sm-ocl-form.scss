@@ -10,4 +10,28 @@
   &__summary {
     margin-top: 1rem;
   }
+
+  &__amount {
+    &.is-discount {
+      color: #999;
+      text-decoration: line-through;
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__discount-wrap {
+    display: flex;
+
+    p {
+      flex: 1;
+    }
+
+    button {
+      max-width: 100px;
+    }
+  }
+
+  &__discount-message {
+    font-size: 0.85rem;
+  }
 }
