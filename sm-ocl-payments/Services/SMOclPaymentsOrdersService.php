@@ -25,21 +25,26 @@ class SMOclPaymentsOrdersService
       return 0;
     }
 
+    $meta = [
+      'ocl_id' => $orderData['id'] ?? 0,
+      'ocl_date' => $orderData['date'] ?? '',
+      'ocl_crc' => $orderData['crc'] ?? '',
+      'ocl_amount' => $orderData['amount'] ?? 0,
+      'ocl_email' => $orderData['email'] ?? '',
+      'ocl_md5sum' => $orderData['md5sum'] ?? '',
+      'ocl_description' => $orderData['description'] ?? '',
+      'ocl_status' => $status
+    ];
+
+    if(isset($orderData['discount']) && $orderData['discount']) {
+      $meta['ocl_discount'] = $orderData['discount'];
+    }
+
     return wp_insert_post([
       'post_title' => sprintf('%1$s %2$s', __('Order', PluginConfig::getTextDomain()), $orderData['id'] ?? 0),
       'post_status' => 'publish',
       'post_type' => static::ORDER_TYPE,
-      'meta_input' => array_merge([
-        'ocl_id' => $orderData['id'] ?? 0,
-        'ocl_date' => $orderData['date'] ?? '',
-        'ocl_crc' => $orderData['crc'] ?? '',
-        'ocl_amount' => $orderData['amount'] ?? 0,
-        'ocl_email' => $orderData['email'] ?? '',
-        'ocl_md5sum' => $orderData['md5sum'] ?? '',
-        'ocl_description' => $orderData['dedscription'] ?? '',
-      ], [
-        'ocl_status' => $status
-      ])
+      'meta_input' => $meta
     ]);
   }
 
@@ -48,7 +53,7 @@ class SMOclPaymentsOrdersService
     return get_post_meta($orderId, 'ocl_status', true) ?: false;
   }
 
-  public static function getOrderStatusLabel(int $orderId, string $status = 'success')
+  public static function getOrderStatusLabel(string $status = 'success')
   {
     $labels = [
       'success' => __('Success', PluginConfig::getTextDomain()),
@@ -61,7 +66,7 @@ class SMOclPaymentsOrdersService
   public static function getOrderStatusBadge(int $orderId)
   {
     $status = static::getOrderStatus($orderId);
-    $label = static::getOrderStatusLabel($orderId, $status);
+    $label = static::getOrderStatusLabel($status);
 
     return "<span class='sm-ocl-status sm-ocl-status--$status'>$label</span>";
   }

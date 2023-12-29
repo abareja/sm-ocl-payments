@@ -108,4 +108,15 @@ class SMOclPaymentsDiscountsService
 
     return (int) (get_field('discount', 'term_' . $discountTermId)) ?? 0;
   }
+
+  public static function getDiscountCodeById(int $discountTermId): string
+  {
+    $discount = get_term($discountTermId);
+
+    if(!$discount) {
+      return "";
+    } 
+
+    return $discount->name ?? "";
+  }
 }

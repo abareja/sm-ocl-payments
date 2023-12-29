@@ -76,8 +76,12 @@ const initDiscounts = async () => {
         const amountDisplay = form.querySelector('[data-ocl-order-form-amount]');
         const discountAmountDisplay = form.querySelector('[data-ocl-order-form-discount-amount]');
 
+        let discountUsed = false;
+
         applyBtn.addEventListener('click', e => {
             e.preventDefault();
+
+            if(discountUsed) return;
 
             if(codeInput.value === "" || amountInput.value === "" || crcInput === "") return;
 
@@ -99,6 +103,7 @@ const initDiscounts = async () => {
                         resultUrlInput.value = newResultUrl;
                     }
 
+                    discountUsed = true;
                     amountDisplay.classList.add('is-discount');
                     discountAmountDisplay.innerHTML = `${response.data.fullAmount} (-${response.data.discount}%)`;
                 }

@@ -50,15 +50,17 @@
           <div data-ocl-foldable class="sm-ocl-foldable">
             <p data-ocl-foldable-handle class="sm-ocl-foldable__handle"><?php _e('Have discount code?', PluginConfig::getTextDomain()); ?></p>
             <div data-ocl-foldable-content class="sm-ocl-foldable__content">
-              <p class="sm-col-parsley-validate">
-                <input
-                  type="text"
-                  name="discount-code"
-                  class="sm-ocl-input"
-                  placeholder="<?php _e('Discount code', PluginConfig::getTextDomain()); ?>"
-                />
-              </p>
-              <button type="button" class="sm-ocl-button sm-ocl-button--black" data-ocl-discount-submit><?php _e('Apply', PluginConfig::getTextDomain()); ?></button>
+              <div class="sm-ocl-form__discount-wrap">
+                <p class="sm-col-parsley-validate">
+                  <input
+                    type="text"
+                    name="discount-code"
+                    class="sm-ocl-input"
+                    placeholder="<?php _e('Discount code', PluginConfig::getTextDomain()); ?>"
+                  />
+                </p>
+                <button type="button" class="sm-ocl-button sm-ocl-button--black" data-ocl-discount-submit><?php _e('Apply', PluginConfig::getTextDomain()); ?></button>
+              </div>  
             </div>
           </div>
         <?php endif; ?>

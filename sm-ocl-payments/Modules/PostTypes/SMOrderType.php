@@ -14,7 +14,7 @@ class SMOrderType extends PostType
     protected array $args = [
         'labels' => [
             'name' => 'SM One-Click Orders',
-            'singular_name' => 'SM Ocl Orders',
+            'singular_name' => 'SM OCL Orders',
             'menu_name' => 'SM One-Click Orders'
         ],
         'supports' => ['title'],

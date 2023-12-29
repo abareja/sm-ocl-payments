@@ -136,13 +136,14 @@ class SMOclPaymentsNotificationsService
   public function getActionData()
   {
     return [
-      'id' => $_POST['tr_id'] ?? 0,
-      'date' => $_POST['tr_date'] ?? '',
-      'crc' => $_POST['tr_crc'] ?? '',
-      'amount' => $_POST['tr_amount'] ?? 0,
-      'email' => $_POST['tr_email'] ?? '',
-      'md5sum' => $_POST['md5sum'] ?? '',
-      'description' => $_POST['tr_desc'] ?? '',
+      'id' => sanitize_text_field($_POST['tr_id'] ?? 0),
+      'date' => sanitize_text_field($_POST['tr_date'] ?? ''),
+      'crc' => sanitize_text_field($_POST['tr_crc'] ?? ''),
+      'amount' => sanitize_text_field($_POST['tr_amount'] ?? 0),
+      'email' => sanitize_text_field($_POST['tr_email'] ?? ''),
+      'md5sum' => sanitize_text_field($_POST['md5sum'] ?? ''),
+      'description' => sanitize_text_field($_POST['tr_desc'] ?? ''),
+      'discount' => sanitize_text_field($_GET['discount'] ?? 0)
     ];
   }
 

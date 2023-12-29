@@ -308,6 +308,18 @@ class SMOclPayments
                 ];
             }
 
+            if(get_post_meta($post->ID, 'ocl_discount', true)) {
+                $discountTermId = (int) get_post_meta($post->ID, 'ocl_discount', true);
+                $details[] = [
+                    'label' => __('Discount code: ', $textDomain),
+                    'value' => SMOclPaymentsDiscountsService::getDiscountCodeById($discountTermId)
+                ];
+                $details[] = [
+                    'label' => __('Discount: ', $textDomain),
+                    'value' => SMOclPaymentsDiscountsService::getDiscount($discountTermId) . '%'
+                ];
+            }
+
             echo Helpers::getView(PluginConfig::getPluginDir() . '/Modules/Admin/Views/orderDetails.view.php', [
                 'id' => $post->ID,
                 'status' => $status,

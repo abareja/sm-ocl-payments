@@ -3,6 +3,7 @@
     font-size: 0.75rem;
     cursor: pointer;
     padding-right: 1.5rem;
+    position: relative;
 
     &:after {
       content: '';
@@ -11,14 +12,16 @@
       height: 0.5em;
       border-bottom: 1px solid #999;
       border-right: 1px solid #999;
-      transform: rotate(45deg);
       margin-left: 0.5rem;
       vertical-align: middle;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
     }
   }
 
   &.is-open &__handle:after {
-    transform: rotate(225deg);
+    transform: rotate(-135deg);
   }
 
   &__content {
@@ -27,7 +30,7 @@
     &:before {
       content: '';
       display: block;
-      height: 1rem; 
+      height: 0.5rem; 
     }
   }
 }
