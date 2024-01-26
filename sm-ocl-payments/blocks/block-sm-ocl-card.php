@@ -26,20 +26,24 @@ use SM\OclPayments\Config\PluginConfig;
         <?php endif; ?>
 
         <?php
-          $amount = $fields['amount'] ?: false;
-          $crc = $fields['crc'] ?: false;
-          $description = $fields['description'] ?: '';
-          $label = $fields['label'] ?: __('Purchase', PluginConfig::getTextDomain());
+          $shortcodeAttributes = "";
+
+          $attributes = [
+            'amount' => $fields['amount'] ?? false,
+            'crc' => $fields['crc'] ?? false,
+            'description' => $fields['description'] ?? false,
+            'label' => $fields['label'] ?? __('Purchase', PluginConfig::getTextDomain()),
+            'template' => $fields['template-id'] ?? false
+          ];
+
+          foreach($attributes as $key => $attribute) {
+            $shortcodeAttributes .= $attribute !== false ? "$key = '" . $attribute . "' " : "'";
+          }
         ?>
 
-        <?php if($amount && $crc && !empty($label)): ?>
+        <?php if($attributes['amount'] && $attributes['crc'] && !empty($attributes['label'])): ?>
           <p class="sm-ocl-card__buy">
-            <?php echo do_shortcode("[sm-ocl-payments 
-                amount='" . $amount .  "' 
-                crc='" . $crc . "' 
-                description='" . $description .  "'
-                label='" . $label . "'
-            ]"); ?>
+            <?php echo do_shortcode("[sm-ocl-payments $shortcodeAttributes]"); ?>
           </p>
           <?php endif; ?>
       </div>  

@@ -22,6 +22,9 @@ use SM\OclPayments\Config\PluginConfig;
     <hr />
     <h4><?php _e('With label:', PluginConfig::getTextDomain()); ?></h4>
     <pre>[sm-ocl-payments amount="10.0" crc="Product-1" description="Sample payment" label="Button label"]</pre>
+    <hr />
+    <h4><?php _e('With e-mail template:', PluginConfig::getTextDomain()); ?></h4>
+    <pre>[sm-ocl-payments amount="10.0" crc="Product-1" description="Sample payment" label="Button label" template="10"]</pre>
   </div>
 
   <hr />
@@ -35,6 +38,7 @@ use SM\OclPayments\Config\PluginConfig;
   <ul style="list-style: disc; padding-left: 16px;">
     <li><?php _e('Description', PluginConfig::getTextDomain()); ?></li>
     <li><?php _e('Label - text displayed on button - default to "Purchase"', PluginConfig::getTextDomain()); ?></li>
+    <li><?php _e('Template - e-mail template sent after succesful payment', PluginConfig::getTextDomain()); ?></li>
   </ul>
 
 <?php else: 

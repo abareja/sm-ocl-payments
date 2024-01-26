@@ -11,7 +11,7 @@ msgstr ""
 "PO-Revision-Date: 2023-12-19T11:24:56+00:00\n"
 "Language: \n"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:41
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:45
 msgid "ACF Pro is required for this plugin. Enable it on plugins page!"
 msgstr "Wtyczka ACF Pro jest wymagana do prawidłowego działania. Włącz ją na stronie zarządzania wtyczkami!"
 
@@ -47,7 +47,7 @@ msgstr "URL powrotu"
 msgid "Return Error URL"
 msgstr "URL powrotu dla błędów"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:116
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:138
 msgid "Save changes"
 msgstr "Zapisz zmiany"
 
@@ -67,8 +67,8 @@ msgstr "Z opisem:"
 msgid "Pay"
 msgstr "Zapłać"
 
-#: sm-ocl-payments/blocks/block-sm-ocl-card.php:32
-#: sm-ocl-payments/Core/SMOclPayments.php:175
+#: sm-ocl-payments/blocks/block-sm-ocl-card.php:35
+#: sm-ocl-payments/Core/SMOclPayments.php:186
 msgid "Purchase"
 msgstr "Kup"
 
@@ -85,6 +85,7 @@ msgstr "Treść zgody"
 msgid "Order"
 msgstr "Zamówienie"
 
+#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:35
 #: sm-ocl-payments/Modules/Views/form.view.php:101
 msgid "Amount"
 msgstr "Kwota"
@@ -105,31 +106,31 @@ msgstr "Przed zakupem należy zaakceptować zgodę."
 msgid "* Phone number"
 msgstr "* Numer telefonu"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:276
+#: sm-ocl-payments/Core/SMOclPayments.php:303
 msgid "Status: "
 msgstr "Status: "
 
-#: sm-ocl-payments/Core/SMOclPayments.php:280
+#: sm-ocl-payments/Core/SMOclPayments.php:307
 msgid "E-mail address: "
 msgstr "Adres e-mail: "
 
-#: sm-ocl-payments/Core/SMOclPayments.php:284
+#: sm-ocl-payments/Core/SMOclPayments.php:311
 msgid "CRC: "
 msgstr "CRC: "
 
-#: sm-ocl-payments/Core/SMOclPayments.php:288
+#: sm-ocl-payments/Core/SMOclPayments.php:315
 msgid "Amount: "
 msgstr "Kwota: "
 
-#: sm-ocl-payments/Core/SMOclPayments.php:292
+#: sm-ocl-payments/Core/SMOclPayments.php:319
 msgid "Description: "
 msgstr "Opis: "
 
-#: sm-ocl-payments/Core/SMOclPayments.php:296
+#: sm-ocl-payments/Core/SMOclPayments.php:323
 msgid "Date: "
 msgstr "Data: "
 
-#: sm-ocl-payments/Core/SMOclPayments.php:300
+#: sm-ocl-payments/Core/SMOclPayments.php:327
 msgid "TPay order ID: "
 msgstr "ID zamówienia TPay: "
 
@@ -137,23 +138,23 @@ msgstr "ID zamówienia TPay: "
 msgid "With label:"
 msgstr "Z etykietą (label):"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:28
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:31
 msgid "Mandatory parameters:"
 msgstr "Obowiązkowe parametry:"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:31
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:34
 msgid "CRC - alphanumeric value, up to 128 characters, identyfing transaction or product"
 msgstr "CRC - wartość alfanumeryczna, zawierająca maksymalnie 128 znaków, identyfikująca transakcję bądź produkt"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:34
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:37
 msgid "Additional parameters:"
 msgstr "Dodatkowe parametry:"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:36
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:39
 msgid "Description"
 msgstr "Opis (description)"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:37
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:40
 msgid "Label - text displayed on button - default to \"Purchase\""
 msgstr "Etykieta (label) - tekst wyświetlany na przycisku - domyślnie \"Kup\""
 
@@ -161,17 +162,16 @@ msgstr "Etykieta (label) - tekst wyświetlany na przycisku - domyślnie \"Kup\""
 msgid "Order status"
 msgstr "Status zamówienia"
 
-#: sm-ocl-payments/Services/SMOclPaymentsMailerService.php:24
 #: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:59
 msgid "Success"
 msgstr "Sukces"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:308
+#: sm-ocl-payments/Core/SMOclPayments.php:335
 #: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:60
 msgid "Failure"
 msgstr "Niepowodzenie"
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:30
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:33
 msgctxt "settings page"
 msgid "Amount"
 msgstr "Kwota (amount)"
@@ -180,19 +180,15 @@ msgstr "Kwota (amount)"
 msgid "Send e-mails (requires option \"Save orders\" to be enabled)"
 msgstr "Wysyłaj e-maile (wymaga włączenia opcji \"Zapisz zamówienia\")"
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:90
-msgid "Successful e-mail template"
-msgstr "Powodzenie - szablon e-maila"
-
 #: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:98
 msgid "Admin e-mail"
 msgstr "Adres e-mail administratora"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:307
+#: sm-ocl-payments/Core/SMOclPayments.php:334
 msgid "Email status: "
 msgstr "Status wiadomości e-mail: "
 
-#: sm-ocl-payments/Core/SMOclPayments.php:308
+#: sm-ocl-payments/Core/SMOclPayments.php:335
 msgid "Sent"
 msgstr "Wysłana"
 
@@ -224,11 +220,11 @@ msgstr "Kod rabatowy nie istnieje"
 msgid "Discount code applied"
 msgstr "Kod rabatowy został zastosowany"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:315
+#: sm-ocl-payments/Core/SMOclPayments.php:342
 msgid "Discount code: "
 msgstr "Kod rabatowy: "
 
-#: sm-ocl-payments/Core/SMOclPayments.php:319
+#: sm-ocl-payments/Core/SMOclPayments.php:346
 msgid "Discount: "
 msgstr "Zniżka: "
 
@@ -240,46 +236,94 @@ msgstr "Kod rabatowy jest nieaktywny"
 msgid "Discount code is not valid"
 msgstr "Kod rabatowy jest nieprawidłowy"
 
-#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:59
+#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:64
 msgid "Discount codes"
 msgstr "Kody rabatowe"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:113
+#: sm-ocl-payments/Core/SMOclPayments.php:115
 msgid "Discount"
 msgstr "Zniżka"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:119
+#: sm-ocl-payments/Core/SMOclPayments.php:121
 msgid "Is active?"
 msgstr "Aktywny?"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:84
+#: sm-ocl-payments/Core/SMOclPayments.php:86
 msgid "E-mail subject"
 msgstr "Tytuł wiadomości e-mail"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:88
+#: sm-ocl-payments/Core/SMOclPayments.php:90
 msgid "E-mail template"
 msgstr "Szablon wiadomości"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:89
+#: sm-ocl-payments/Core/SMOclPayments.php:91
 msgid "Possible shortcodes: [client_email], [amount], [description], [order_date], [crc], [id]"
 msgstr "Obsługiwane shortcode: [client_email], [amount], [description], [order_date], [crc], [id]"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:94
+#: sm-ocl-payments/Core/SMOclPayments.php:96
 msgid "Attachments"
 msgstr "Załączniki"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:99
+#: sm-ocl-payments/Core/SMOclPayments.php:101
 msgid "File"
 msgstr "Plik"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:95
+#: sm-ocl-payments/Core/SMOclPayments.php:97
 msgid "Add attachment"
 msgstr "Dodaj załącznik"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:80
+#: sm-ocl-payments/Core/SMOclPayments.php:82
 msgid "E-mail template details"
 msgstr "Ustawienia szablonu e-mail"
 
-#: sm-ocl-payments/Core/SMOclPayments.php:268
+#: sm-ocl-payments/Core/SMOclPayments.php:295
 msgid "Order details"
 msgstr "Szczegóły zamówienia"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:90
+msgid "Successful e-mail template when not specified"
+msgstr "Powodzenie - szablon e-maila jeżeli nie przypisano innego"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:147
+msgid "Choose template"
+msgstr "Wybierz szablon"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:26
+msgid "With e-mail template:"
+msgstr "Z szablonem e-mail:"
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:41
+msgid "Template - e-mail template sent after succesful payment"
+msgstr "Szablon (template) - szablon wiadomości e-mail wysyłanej po zakończonej transakcji"
+
+#: sm-ocl-payments/Core/SMOclPayments.php:361
+msgid "Template details"
+msgstr "Szczegóły szablonu e-mail"
+
+#: sm-ocl-payments/Modules/Admin/Views/templateDetails.view.php:7
+msgid "To use this template either choose it in the settings for all orders or add this phrase to shortcode: "
+msgstr "Aby użyć tego szablonu wybierz go w globalnych ustawieniach (wtedy zostanie zastosowany do wszystkich zamówień) lub dodaj tę frazę do shortcode: "
+
+#: sm-ocl-payments/Modules/Admin/Views/templateDetails.view.php:9
+msgid "For example: "
+msgstr "Na przykład: "
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:113
+msgid "Button style"
+msgstr "Styl przycisku"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:121
+msgid "Button background color (or border when outline style selected)"
+msgstr "Kolor tła przycisku (lub ramki jeżeli wybrany jest styl \"Z ramką\")"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:128
+msgid "Button font color"
+msgstr "Kolor czcionki przycisku"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:170
+msgid "Filled"
+msgstr "Wypełniony"
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:169
+msgid "Outline"
+msgstr "Z ramką"

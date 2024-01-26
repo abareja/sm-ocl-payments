@@ -13,3 +13,8 @@
   background: red;
   color: #fff;
 }
+
+pre {
+  background-color: #e2e2e2;
+  padding: 0.25em;
+}

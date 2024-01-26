@@ -7,102 +7,106 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-12-29T02:10:12+00:00\n"
+"POT-Creation-Date: 2024-01-26T17:05:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.8.1\n"
+"X-Generator: WP-CLI 2.10.0-alpha-dd92ec0\n"
 
-#: sm-ocl-payments/blocks/block-sm-ocl-card.php:32
-#: sm-ocl-payments/Core/SMOclPayments.php:175
+#: sm-ocl-payments/blocks/block-sm-ocl-card.php:35
+#: sm-ocl-payments/Core/SMOclPayments.php:186
 msgid "Purchase"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:80
+#: sm-ocl-payments/Core/SMOclPayments.php:82
 msgid "E-mail template details"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:84
+#: sm-ocl-payments/Core/SMOclPayments.php:86
 msgid "E-mail subject"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:88
+#: sm-ocl-payments/Core/SMOclPayments.php:90
 msgid "E-mail template"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:89
+#: sm-ocl-payments/Core/SMOclPayments.php:91
 msgid "Possible shortcodes: [client_email], [amount], [description], [order_date], [crc], [id]"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:94
+#: sm-ocl-payments/Core/SMOclPayments.php:96
 msgid "Attachments"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:95
+#: sm-ocl-payments/Core/SMOclPayments.php:97
 msgid "Add attachment"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:99
+#: sm-ocl-payments/Core/SMOclPayments.php:101
 msgid "File"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:113
+#: sm-ocl-payments/Core/SMOclPayments.php:115
 msgid "Discount"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:119
+#: sm-ocl-payments/Core/SMOclPayments.php:121
 msgid "Is active?"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:268
+#: sm-ocl-payments/Core/SMOclPayments.php:295
 msgid "Order details"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:276
+#: sm-ocl-payments/Core/SMOclPayments.php:303
 msgid "Status: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:280
+#: sm-ocl-payments/Core/SMOclPayments.php:307
 msgid "E-mail address: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:284
+#: sm-ocl-payments/Core/SMOclPayments.php:311
 msgid "CRC: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:288
+#: sm-ocl-payments/Core/SMOclPayments.php:315
 msgid "Amount: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:292
+#: sm-ocl-payments/Core/SMOclPayments.php:319
 msgid "Description: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:296
+#: sm-ocl-payments/Core/SMOclPayments.php:323
 msgid "Date: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:300
+#: sm-ocl-payments/Core/SMOclPayments.php:327
 msgid "TPay order ID: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:307
+#: sm-ocl-payments/Core/SMOclPayments.php:334
 msgid "Email status: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:308
+#: sm-ocl-payments/Core/SMOclPayments.php:335
 msgid "Sent"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:308
+#: sm-ocl-payments/Core/SMOclPayments.php:335
 #: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:60
 msgid "Failure"
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:315
+#: sm-ocl-payments/Core/SMOclPayments.php:342
 msgid "Discount code: "
 msgstr ""
 
-#: sm-ocl-payments/Core/SMOclPayments.php:319
+#: sm-ocl-payments/Core/SMOclPayments.php:346
 msgid "Discount: "
+msgstr ""
+
+#: sm-ocl-payments/Core/SMOclPayments.php:361
+msgid "Template details"
 msgstr ""
 
 #: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:19
@@ -146,7 +150,7 @@ msgid "Consent text"
 msgstr ""
 
 #: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:90
-msgid "Successful e-mail template"
+msgid "Successful e-mail template when not specified"
 msgstr ""
 
 #: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:98
@@ -157,8 +161,32 @@ msgstr ""
 msgid "Enable discount codes support"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:116
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:113
+msgid "Button style"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:121
+msgid "Button background color (or border when outline style selected)"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:128
+msgid "Button font color"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:138
 msgid "Save changes"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:147
+msgid "Choose template"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:169
+msgid "Outline"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Forms/SettingsForm.php:170
+msgid "Filled"
 msgstr ""
 
 #: sm-ocl-payments/Modules/Admin/Views/settings.view.php:16
@@ -177,33 +205,49 @@ msgstr ""
 msgid "With label:"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:28
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:26
+msgid "With e-mail template:"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:31
 msgid "Mandatory parameters:"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:30
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:33
 msgctxt "settings page"
 msgid "Amount"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:31
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:34
 msgid "CRC - alphanumeric value, up to 128 characters, identyfing transaction or product"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:34
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:37
 msgid "Additional parameters:"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:36
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:39
 msgid "Description"
 msgstr ""
 
-#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:37
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:40
 msgid "Label - text displayed on button - default to \"Purchase\""
 msgstr ""
 
 #: sm-ocl-payments/Modules/Admin/Views/settings.view.php:41
+msgid "Template - e-mail template sent after succesful payment"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Views/settings.view.php:45
 msgid "ACF Pro is required for this plugin. Enable it on plugins page!"
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Views/templateDetails.view.php:7
+msgid "To use this template either choose it in the settings for all orders or add this phrase to shortcode: "
+msgstr ""
+
+#: sm-ocl-payments/Modules/Admin/Views/templateDetails.view.php:9
+msgid "For example: "
 msgstr ""
 
 #: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:33
@@ -214,7 +258,12 @@ msgstr ""
 msgid "CRC"
 msgstr ""
 
-#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:59
+#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:35
+#: sm-ocl-payments/Modules/Views/form.view.php:101
+msgid "Amount"
+msgstr ""
+
+#: sm-ocl-payments/Modules/PostTypes/SMOrderType.php:64
 msgid "Discount codes"
 msgstr ""
 
@@ -251,10 +300,6 @@ msgstr ""
 msgid "You have to agree to consent."
 msgstr ""
 
-#: sm-ocl-payments/Modules/Views/form.view.php:101
-msgid "Amount"
-msgstr ""
-
 #: sm-ocl-payments/Modules/Views/form.view.php:119
 msgid "Pay"
 msgstr ""
@@ -279,7 +324,6 @@ msgstr ""
 msgid "Discount code applied"
 msgstr ""
 
-#: sm-ocl-payments/Services/SMOclPaymentsMailerService.php:24
 #: sm-ocl-payments/Services/SMOclPaymentsOrdersService.php:59
 msgid "Success"
 msgstr ""

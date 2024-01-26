@@ -31,7 +31,8 @@ class SMOrderType extends PostType
                 array_slice($columns, 0, $offset),
                 [
                     'sm-ocl-status' => __('Order status', PluginConfig::getTextDomain()),
-                    'sm-ocl-crc' => __('CRC', PluginConfig::getTextDomain())
+                    'sm-ocl-crc' => __('CRC', PluginConfig::getTextDomain()),
+                    'sm-ocl-amount' => __('Amount', PluginConfig::getTextDomain())
                 ],
                 array_slice($columns, $offset, null)
             );
@@ -44,6 +45,10 @@ class SMOrderType extends PostType
 
         if($columnName === 'sm-ocl-crc') {
             echo get_post_meta($postId, 'ocl_crc', true);
+        }
+
+        if($columnName === 'sm-ocl-amount') {
+            echo SMOclPayments::formatCurrency(get_post_meta($postId, 'ocl_amount', true));
         }
         }, 10, 2);
     }
