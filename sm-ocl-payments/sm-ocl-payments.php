@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name:     See-me one-click payments plugin
- * Version:         1.0.1
+ * Version:         1.0.2
  * Description:     See-me plugin for one-click payments.
  * Author:          See-Me
  * Author URI:      https://see-me.pl
