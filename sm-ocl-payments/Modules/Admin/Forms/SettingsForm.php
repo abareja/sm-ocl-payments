@@ -87,7 +87,7 @@ class SettingsForm extends AdminForm
       ],
       [
         'type' => 'Select',
-        'label' => __('Successful e-mail template', $textDomain),
+        'label' => __('Successful e-mail template when not specified', $textDomain),
         'id' => 'sm_ocl_payments_success_template',
         'name' => 'sm_ocl_payments_success_template',
         'choices' => static::getTemplates(),
@@ -109,6 +109,28 @@ class SettingsForm extends AdminForm
         'checked' => true
       ],
       [
+        'type' => 'Select',
+        'label' => __('Button style', $textDomain),
+        'id' => 'sm_ocl_payments_btn_style',
+        'name' => 'sm_ocl_payments_btn_style',
+        'choices' => static::getButtonStyles(),
+        'value' => ''
+      ],
+      [
+        'type' => 'ColorPicker',
+        'label' => __('Button background color (or border when outline style selected)', $textDomain),
+        'id' => 'sm_ocl_payments_btn_bg',
+        'name' => 'sm_ocl_payments_btn_bg',
+        'value' => ''
+      ],
+      [
+        'type' => 'ColorPicker',
+        'label' => __('Button font color', $textDomain),
+        'id' => 'sm_ocl_payments_btn_font',
+        'name' => 'sm_ocl_payments_btn_font',
+        'value' => ''
+      ],
+      [
         'type' => 'Buttons',
         'buttons' => [
           [
@@ -116,12 +138,14 @@ class SettingsForm extends AdminForm
             'label' => __('Save changes', $textDomain)
           ]
         ]
-      ]
+      ],
     ];
   }
 
   public static function getTemplates()
   {
+    $result = [0 => __('Choose template', PluginConfig::getTextDomain())];
+
     $query = new \WP_Query([
       'post_type' => 'sm-ocl-template',
       'posts_per_page' => -1,
@@ -129,14 +153,21 @@ class SettingsForm extends AdminForm
     ]);
 
     if(!$query->have_posts()) {
-      return [];
+      return $result;
     }
 
-    $result = [];
     foreach($query->posts ?? [] as $postId) {
       $result[$postId] = get_the_title($postId);
     }
 
     return $result;
+  }
+
+  public static function getButtonStyles(): array
+  {
+    return [
+      'outline' => __('Outline', PluginConfig::getTextDomain()),
+      'filled' => __('Filled', PluginConfig::getTextDomain()),
+    ];
   }
 }

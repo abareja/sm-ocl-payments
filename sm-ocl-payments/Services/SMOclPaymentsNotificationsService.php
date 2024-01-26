@@ -2,6 +2,7 @@
 
 namespace SM\OclPayments\Services;
 
+use SM\OclPayments\Modules\Admin\DataStores\SettingsDataStore;
 use SM\OclPayments\Services\SMOclPaymentsOrdersService as OrdersService;
 use SMOclPayments;
 
@@ -143,7 +144,8 @@ class SMOclPaymentsNotificationsService
       'email' => sanitize_text_field($_POST['tr_email'] ?? ''),
       'md5sum' => sanitize_text_field($_POST['md5sum'] ?? ''),
       'description' => sanitize_text_field($_POST['tr_desc'] ?? ''),
-      'discount' => sanitize_text_field($_GET['discount'] ?? 0)
+      'discount' => sanitize_text_field($_GET['discount'] ?? 0),
+      'template' => sanitize_text_field($_GET['template'] ?? false),
     ];
   }
 
@@ -157,9 +159,15 @@ class SMOclPaymentsNotificationsService
     }
 
     if(SMOclPayments::sendEmailsEnabled()) {
-      $send = SMOclPaymentsMailerService::sendSuccess($data['email'] ?? '', $data);
-      update_post_meta($orderId, 'ocl_email_send', $send);
+      $templateId = $data['template'] ?: SettingsDataStore::getOption('sm_ocl_payments_success_template') ?: 0;
+
+      if($templateId !== 0) {
+        $send = SMOclPaymentsMailerService::send($templateId, $data['email'] ?? '', $data);
+        update_post_meta($orderId, 'ocl_email_send', $send);
+      }
     }
+
+    return true;
   }
 
   public function failureAction()

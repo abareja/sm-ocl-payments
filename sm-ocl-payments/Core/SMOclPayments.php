@@ -43,21 +43,22 @@ class SMOclPayments
     private function init(): void
     {
         (new SMOclPaymentsAdminMenu())->init();
-        $this->initBlocks();
-        $this->initShortcode();
-        $this->loadAssets();
-        $this->initLocalization();
 
         if(static::saveOrders())
         {
             $this->initSavingOrders();
         }
-
+        
         if(static::isDiscountsEnabled())
         {
             $this->initDiscountsFields();
             SMOclPaymentsDiscountsService::init();
         }
+
+        $this->initBlocks();
+        $this->initShortcode();
+        $this->initLocalization();
+        $this->loadAssets();
     }
 
     public function initSavingOrders()
@@ -72,6 +73,7 @@ class SMOclPayments
 
         $this->notificationsService = new SMOclPaymentsNotificationsService(self::PAYMENT_RESULT_ENDPOINT);
         $this->initOrdersMetabox();
+        $this->initTemplateMetabox();
         $this->initTemplateFields();
     }
 
@@ -162,6 +164,15 @@ class SMOclPayments
             'label' => 'Button label'
         ]);
 
+        if(static::saveOrders()) {
+            $builder->addPostObject('template-id', [
+                'label' => 'E-mail template',
+                'post_type' => $this->templateType->slug,
+                'return_format' => 'id',
+                'allow_null' => true
+            ]);
+        }
+
         $builder->build();
     }
 
@@ -172,7 +183,8 @@ class SMOclPayments
                 'amount' => null,
                 'crc' => null,
                 'description' => '',
-                'label' => __('Purchase', PluginConfig::getTextDomain())
+                'label' => __('Purchase', PluginConfig::getTextDomain()),
+                'template' => 0
             ];
 
             $a = shortcode_atts($defaults, $atts);
@@ -183,7 +195,7 @@ class SMOclPayments
 
             $instanceId = uniqid('sm-ocl-payment-modal-');
 
-            static::appendModal($instanceId, $a['amount'], $a['description'], $a['crc']);
+            static::appendModal($instanceId, $a['amount'], $a['description'], $a['crc'], $a['template']);
             return static::getButtonView($instanceId, $a['label']);
         });
     }
@@ -192,7 +204,10 @@ class SMOclPayments
     {
         return Helpers::getView(PluginConfig::getPluginDir() . '/Modules/Views/button.view.php', [
             'instanceId' => $instanceId,
-            'label' => $label
+            'label' => $label,
+            'buttonStyle' => SettingsDataStore::getOption('sm_ocl_payments_btn_style') ?: 'outline',
+            'buttonBackground' => SettingsDataStore::getOption('sm_ocl_payments_btn_bg') ?: 'currentColor',
+            'buttonFontColor' => SettingsDataStore::getOption('sm_ocl_payments_btn_font') ?: 'currentColor',
         ]);
     }
 
@@ -200,7 +215,8 @@ class SMOclPayments
         string $instanceId, 
         float $amount = null, 
         string $description = '', 
-        string $crc = ''
+        string $crc = '',
+        int $template = 0
     )
     {
         if(!$amount) {
@@ -223,7 +239,7 @@ class SMOclPayments
             'formAction' => static::isSandboxEnabled() ? static::SANDBOX_FORM_ACTION : static::FORM_ACTION,
             'md5Sum' => static::getMd5Sum($amount, $crc),
             'language' => static::getLanguage(),
-            'resultUrl' => home_url('/' . self::PAYMENT_RESULT_ENDPOINT),
+            'resultUrl' => static::getResultUrl($template),
             'merchantId' => SettingsDataStore::getOption('sm_ocl_payments_merchant_id'),
             'returnUrl' => SettingsDataStore::getOption('sm_ocl_payments_return_url'),
             'returnErrorUrl' => SettingsDataStore::getOption('sm_ocl_payments_return_err_url'),
@@ -233,10 +249,21 @@ class SMOclPayments
         ]);
     }
 
-    public static function appendModal(string $instanceId, float $amount, string $description, string $crc)
+    public static function getResultUrl(int $template = 0): string
     {
-        add_action('wp_footer', function() use($instanceId, $amount, $description, $crc) {
-            echo static::getPaymentFormView($instanceId, $amount, $description, $crc);
+        $args = [];
+
+        if($template !== 0) {
+            $args['template'] = $template;
+        }
+
+        return add_query_arg($args, home_url('/' . self::PAYMENT_RESULT_ENDPOINT));
+    }
+
+    public static function appendModal(string $instanceId, float $amount, string $description, string $crc, int $template)
+    {
+        add_action('wp_footer', function() use($instanceId, $amount, $description, $crc, $template) {
+            echo static::getPaymentFormView($instanceId, $amount, $description, $crc, $template);
         });
     }
 
@@ -302,7 +329,7 @@ class SMOclPayments
                 ]
             ];
 
-            if(get_post_meta($post->ID, 'ocl_email_send', true) !== null) {
+            if(get_post_meta($post->ID, 'ocl_email_send', true) !== "") {
                 $details[] = [
                     'label' => __('Email status: ', $textDomain),
                     'value' => boolval(get_post_meta($post->ID, 'ocl_email_send', true)) ? __('Sent', $textDomain) : __('Failure', $textDomain)
@@ -329,19 +356,28 @@ class SMOclPayments
         });
     }
 
+    public function initTemplateMetabox()
+    {
+        $details = new Metabox('sm-ocl-template', __('Template details', PluginConfig::getTextDomain()), $this->templateType->slug, 'side');
+
+        $details->setView(function(\WP_Post $post) {
+            echo Helpers::getView(PluginConfig::getPluginDir() . '/Modules/Admin/Views/templateDetails.view.php', [
+                'id' => $post->ID,
+            ]);
+        });
+    }
+
     public function loadAssets()
     {
         $this->assetsManager->setVersion('1.0.0');
         $this->assetsManager->addStyle('sm-ocl-payments', PluginConfig::getPluginUrl() . '/assets/styles/style.css');
         $this->assetsManager->addScript('sm-ocl-payments', PluginConfig::getPluginUrl() . '/assets/js/main.js', ['jquery']);
         $this->hooksManager->addAction('wp_enqueue_scripts', $this, 'initScriptVars');
-    
         $this->assetsManager->enqueue();
 
         $this->adminAssetsManager->setVersion('1.0.0');
         $this->adminAssetsManager->addStyle('sm-ocl-payments-admin', PluginConfig::getPluginUrl() . '/Modules/Admin/assets/style.css');
         $this->adminAssetsManager->enqueue();
-
     }
 
     public function initScriptVars()

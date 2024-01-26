@@ -2,26 +2,24 @@
 
 namespace SM\OclPayments\Services;
 
-use SM\OclPayments\Config\PluginConfig;
 use SM\OclPayments\Modules\Admin\DataStores\SettingsDataStore;
 use SMOclPayments;
 
 class SMOclPaymentsMailerService
 {
-  public static function sendSuccess($to, array $data = []): bool
+  public static function send($templateId, $to, array $data = []): bool
   {
     if(empty($to)) {
       return false;
     }
 
     $receivers[] = $to;
-    $templateId = SettingsDataStore::getOption('sm_ocl_payments_success_template') ?: false;
 
-    if(!$templateId) {
+    if($templateId === 0 || get_post_status($templateId) !== 'publish') {
       return false;
     }
 
-    $subject = get_field('subject', $templateId) ?: __('Success', PluginConfig::getTextDomain());
+    $subject = get_field('subject', $templateId) ?: '';
     $content = static::getTemplate($templateId, $data);
     $from = get_bloginfo('name');
     $headers = array('From: ' . $from, 'Content-Type: text/html; charset=UTF-8', 'Reply-To: ' . $to);

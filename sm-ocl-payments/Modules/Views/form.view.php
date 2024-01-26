@@ -59,7 +59,7 @@
                     placeholder="<?php _e('Discount code', PluginConfig::getTextDomain()); ?>"
                   />
                 </p>
-                <button type="button" class="sm-ocl-button sm-ocl-button--black" data-ocl-discount-submit><?php _e('Apply', PluginConfig::getTextDomain()); ?></button>
+                <button type="button" class="sm-ocl-button sm-ocl-button--black sm-ocl-button--small" data-ocl-discount-submit><?php _e('Apply', PluginConfig::getTextDomain()); ?></button>
               </div>  
             </div>
           </div>
